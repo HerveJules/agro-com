@@ -1,0 +1,31 @@
+{
+  "name": "agro-com",
+  "version": "1.0.0",
+  "description": "This is agro-business communication platform",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HerveJules/agro-com.git"
+  },
+  "author": "Herve",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HerveJules/agro-com/issues"
+  },
+  "homepage": "https://github.com/HerveJules/agro-com#readme",
+  "dependencies": {
+    "@babel/cli": "^7.4.3",
+    "ejs": "2.6.1",
+    "express": "4.16.4",
+    "pg": "7.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/register": "^7.4.0"
+  }
+}

@@ -1,0 +1,6 @@
+#node dependecies
+node_modules
+
+#babel configuration file
+
+.babelrc
