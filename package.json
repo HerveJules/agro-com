@@ -1,0 +1,48 @@
+{
+  "name": "agro-com",
+  "version": "1.0.0",
+  "description": "This is agro-business communication platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node src/server.js",
+    "start": "node src/server.js",
+    "make:migration": "node_modules/.bin/sequelize migration:create --name",
+    "make:model": "node_modules/.bin/sequelize model:create --name",
+    "make:seed": "node_modules/.bin/sequelize seed:create --name",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "migrate:refresh": "npm run migrate:reset && npm run migrate",
+    "migrate:reset": "node_modules/.bin/sequelize db:migrate:undo:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HerveJules/agro-com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HerveJules/agro-com/issues"
+  },
+  "homepage": "https://github.com/HerveJules/agro-com#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "pg": "^7.9.0",
+    "sequelize": "^5.3.5",
+    "sequelize-cli": "^5.4.0",
+    "underscore": "^1.9.1",
+    "uuid": "^3.3.2"
+  }
+}
