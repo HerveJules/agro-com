@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-const route = require('./app');
+const routev = require('./app');
 
 app.set('port', process.env.PORT || 3000);
-app.set('views engines','ejs');
-app.get('/',(req,res,next) => {
-  res.status(200).send('connected')
+app.use(express.static('public'));
+app.set('view engine','ejs');
+app.use('/',routev.routes);
+
+app.listen(app.get('port'), () => {
+    console.log('chatCat is running on port 3000');
 })
-app.listen(app.get('port'),()=> console.log('server is running on port 3000'));

@@ -1,4 +1,26 @@
-const pool = require ('../config');
+// const pool = require ('../config');
+// 
+// const Pool = require('pg').Pool;
+// const pool = new Pool({
+//     host:'localhost',
+//     user:'acrole',
+//     database:'acroledb',
+//     password:'123',
+//     port:5432
+// })
+if (process.env.NODE_ENV === 'production'){
+  // production db definitions
+  module.exports = {
+    host:process.env.host || "",
+    database:process.env.database
+  }
+}else{
+  // development db definitions
+  module.exports = require('./development.json');
+  
+}
+
+//it may change considering code structure
 
 const getUserById = (req, res, next) => {
   const id = parseInt(req.params.id)
@@ -22,13 +44,13 @@ const createUser = (req, res, next) => {
 }
 
 const deleteUser = (req, res,next) => {
-  const id = parseInt(req.params.id)
+  let id = parseInt(req.params.id)
 
-  pool.query('DELETE FROM users WHERE id = $1', [12], (error, results) => {
+  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
-    res.status(200).send(`User deleted with ID:`,id);
+    res.send(`User deleted with ID:`,id);
   })
 }
 

@@ -9,18 +9,18 @@ module.exports = () => {
             '/dashboard':(req,res,next) => {
                 res.render('dashboard');
             },
-            '/info':model.fetch
+            // '/info':model.fetch
         },
         'post':{
-            '/':model.rm,
+            
             '/dashboard':(req,res,next) => {
                 res.send('post page')
             },
-            '/postuser':model.push,
-            '/deleteuser':model.rm
+            // '/postuser':model.push,
+            // '/deleteuser':model.rm
         },
         '/put':{
-            '/putuser':model.mv
+            // '/putuser':model.mv
         },
         'NA':(req,res,next) => {
             res.status(404).sendFile(process.cwd() + '/views/404.htm');
