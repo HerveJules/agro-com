@@ -2,14 +2,14 @@
   "name": "agro-com",
   "version": "1.0.0",
   "description": "This is agro-business communication platform",
-<<<<<<< HEAD
+// <<<<<<< HEAD
+//   "main": "server.js",
+//   "scripts": {
+//     "test": "echo \"Error: no test specified\" && exit 1",
+//     "start": "node server.js",
+//     "dev": "nodemon --exec babel-node server.js"
+// =======
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon --exec babel-node server.js"
-=======
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src/server.js",
