@@ -1,18 +1,4 @@
+
 {
-<<<<<<< HEAD
-  "presets": [
-    ["@babel/preset-env",
-      {
-        "targets": {
-         "node": "current"
-        }
-      }
-    ]
-  ],
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import"
-  ]
-=======
     "presets": ["@babel/preset-env"]
->>>>>>> 77e669c5f9638b50939b8cd25a55cdda5cddcc22
 }

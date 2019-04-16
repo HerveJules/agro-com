@@ -12,7 +12,7 @@ const User = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    password: {
+    password: { 
       type: DataTypes.STRING
     },
     isadmin: {
@@ -20,7 +20,8 @@ const User = (sequelize, DataTypes) => {
       defaultValue: 'false'
     },
     status: {
-      type:DataTypes.STRING
+      type:DataTypes.STRING,
+      defaultValue:'pending '
     },
     adress: {
       type: DataTypes.STRING
