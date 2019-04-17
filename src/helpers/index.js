@@ -5,10 +5,11 @@ const generateHash = (password) => {
 	return hashPassword;
 }
 
-const compareHashedPassword = (hash,password) => {
-		
-	return bcrypt.compareSync(password,hash);
+const compareHashedPassword = (password,hash) => {
+	const comparePassword =	bcrypt.compareSync(password,hash);
+	return comparePassword;
 }
-	
-
-export default {generateHash,compareHashedPassword};
+export {
+	generateHash,
+	compareHashedPassword
+};

@@ -1,7 +1,7 @@
 import db from '../models';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import enc from '../helpers';
+import {compareHashedPassword, generateHash} from '../helpers';
 const { users } = db;
 
 class Users {
@@ -20,9 +20,9 @@ class Users {
               })
             }
 
-            const encryptedPassword = await enc(password);
+            const encryptedPassword = await generateHash(password);
             const userSave = await users.create({ email, password:encryptedPassword, jobtitle, tin});
-            console.log(userSave.password);
+            // console.log(userSave.password);
             if(userSave) {
               return res.status(201).send({
                 status:201,
@@ -39,15 +39,15 @@ class Users {
           console.log(err);
         }
     }
-  // function that do login operations
+  // function that do login operationscompareHashedPassword
 
   static async auth(req,res) {
     // body...
     const {email,password} = req.body;
     const userfindOne = await users.findOne({where:{email}})
     if (userfindOne) {
-      const Password = enc.compareHashedPassword(password,userfindOne.password);
-      if (Password === password) {
+      
+      if (compareHashedPassword(password,userfindOne.password)) {
         const user = {
           id:userfindOne.id,
           tin:userfindOne.tin
@@ -55,11 +55,11 @@ class Users {
         const token = jwt.sign(user,'secret');
         return res.status(201).send({
           status:201,
-          message:'logged in successfully',
+          message:'You have successfully logged in',
           token
         })
       } else {
-        return res.status(400).send({
+        return res.status(401).send({
           status:401,
           message:'incorrect password'
         })
@@ -69,7 +69,7 @@ class Users {
       // if no user found by email report incorrect email
       return res.status(400).send({
         status:400,
-        message:'incorrect email '
+        message:'User does not exists'
       })
     }
   }

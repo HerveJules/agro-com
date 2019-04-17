@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-#node dependecies
-node_modules
 
 #babel configuration file
-
-=======
 node_modules
 .env
 package-lock.json
->>>>>>> 77e669c5f9638b50939b8cd25a55cdda5cddcc22
