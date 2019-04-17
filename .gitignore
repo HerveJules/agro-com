@@ -1,3 +1,5 @@
+
+#babel configuration file
 node_modules
 .env
 package-lock.json
