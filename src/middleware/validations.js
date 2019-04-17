@@ -1,0 +1,41 @@
+import emailValidator from 'email-validator';
+import passwdValidator from 'password-validator';
+
+
+
+	function validateEmail(req,res,next){
+		const {email} = req.body;
+		console.log(emailValidator.validate(email));
+		if (emailValidator.validate(email)){
+			next();
+		}
+		res.status(406).send({
+			status:406,
+			message: 'invalid email kbs'
+		})
+	}
+	function validatePassword(req,res,next){
+		const {email,password} = req.body;
+		const schema = new passwdValidator();
+
+		schema.is().min(8);
+		schema.has().lowercase();
+		schema.has().uppercase();
+		schema.has().not().spaces();
+		schema.has().digits();
+		if (schema.validate(password)) {
+			next();
+		} else {
+			return res.status(406).send({
+			status:406,
+			message:'invalid password',
+			error:schema.validate(password,{list:true})
+			})
+		}
+	}
+
+
+export default {
+	validateEmail,
+	validatePassword
+}
