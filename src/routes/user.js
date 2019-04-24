@@ -14,7 +14,6 @@ const router = express.Router();
 
 router.post('/api/v1/auth/signup', User.createUser);
 
-<<<<<<< HEAD
 router.post('/api/v1/auth/signin',User.auth);
 
 router.post('/api/v1/add/coop',Coop.createCoop);
@@ -25,6 +24,4 @@ router.post('/api/v1/add/coop',Coop.createCoop);
 
 router.use('/api/v1/secret',passport.authenticate('jwt',{session:false},User.secret));
 	
-=======
->>>>>>> origin/revert-2-login
 export default router;

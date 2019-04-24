@@ -1,27 +1,20 @@
 import db from '../models';
-<<<<<<< HEAD
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {compareHashedPassword, generateHash} from '../helpers';
 import validation from '../middleware/validations';
 import secret from '../config/secretKey.js';
 const secretKey = secret.secretKey
-=======
-
->>>>>>> origin/revert-2-login
 const { users } = db;
 
 class Users {
+
     static async createUser(req, res) {
         const {
             email, password, jobtitle, tin
         } = req.body                
         try {
-<<<<<<< HEAD
             const userFind = await users.findOne({ where: { email}})
-=======
-            const userFind = await users.findOne({ where: { email }})
->>>>>>> origin/revert-2-login
             if(userFind) {
               return res.status(400).send({
                 status:400,
@@ -29,12 +22,8 @@ class Users {
               })
             }
 
-<<<<<<< HEAD
             const encryptedPassword = await generateHash(password);
             const userSave = await users.create({ email, password:encryptedPassword, jobtitle, tin});
-=======
-            const userSave = await users.create({ email, password, jobtitle, tin});
->>>>>>> origin/revert-2-login
             if(userSave) {
               return res.status(201).send({
                 status:201,
@@ -46,13 +35,11 @@ class Users {
                 }
               })
             }
-
         }
         catch(err) {
           console.log(err);
         }
     }
-<<<<<<< HEAD
 
 
 
@@ -110,8 +97,6 @@ class Users {
     console.log('i will manage it here!')
   }
 
-=======
->>>>>>> origin/revert-2-login
 }
 
 export default Users;
