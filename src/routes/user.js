@@ -1,15 +1,15 @@
 import express from 'express';
 import User from '../controllers/user';
 import Coop from '../controllers/coops';
-import validators from '../middleware/validations';
+
 import passport from 'passport';
 import passportAuth from '../config/passport';
 
 const router = express.Router();
 
-router.use('/api/v1/auth',validators.validatePassword);
+// router.use('/api/v1/auth',validators.validatePassword);
 
-router.use('/api/v1/auth',validators.validateEmail);
+// router.use('/api/v1/auth',validators.validateEmail);
 
 
 router.post('/api/v1/auth/signup', User.createUser);

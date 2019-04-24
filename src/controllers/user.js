@@ -40,6 +40,12 @@ class Users {
           console.log(err);
         }
     }
+
+
+
+
+
+
   // function that do login operationscompareHashedPassword
 
   static async auth(req,res) {
@@ -77,15 +83,18 @@ class Users {
           })
         }
     }catch(err){
-      // error message catched exceptionaly
-      const message = err;
+      res.status(203).send({
+        message:err
+      })
     }
     
   }
+
+
+
+
   secret (req,res) {
-    res.send({
-      message:'i am getting authorised page'
-    })
+    console.log('i will manage it here!')
   }
 
 }
