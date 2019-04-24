@@ -1,26 +1,36 @@
+import {users} from '../models';
 import passport from 'passport';
-import localStrategy from 'passport-local';
 import passportJWT from 'passport-jwt';
+import secret from '../config/secretKey';
+const secretKey = secret.secretKey;
+const jwtStrategy = passportJWT.Strategy;
+const ExtractJwt = passportJWT.ExtractJwt; 
 
-// const LocalStrategy = localStrategy.Strategy;
 
-const JWTStrategy   = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
+passport.use( new jwtStrategy({
+        jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
+        secretOrKey   : 'agro-comauthorisationcode'
+    },async (Payload, done) => {
 
+       try{
+         //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        const findById = await users.find({where :{id:Payload.id}})
 
-passport.use(new JWTStrategy({
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey   : 'secret'
-    },
-    function (jwtPayload, done) {
+        // if not exist, handle it
 
-        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return UserModel.findOneById(jwtPayload.id)
-            .then(user => {
-                return done(null, user);
-            })
-            .catch(err => {
-                return done(err);
-            });
+        if(!findById){
+            console.log(findById);
+            return done(null,false);
+        }
+
+        // if exist handle it
+
+        else{
+            console.log(findById);
+            done(null,findById);
+        }
+       }catch(error){
+        done(error,false);
+       }
     }
 ));

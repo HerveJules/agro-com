@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {compareHashedPassword, generateHash} from '../helpers';
 import validation from '../middleware/validations';
+import secret from '../config/secretKey.js';
+const secretKey = secret.secretKey
 const { users } = db;
 
 class Users {
@@ -54,7 +56,7 @@ class Users {
               id:userfindOne.id,
               tin:userfindOne.tin
             }
-            const token = jwt.sign(user,'secret');
+            const token = jwt.sign(user,'agro-comauthorisationcode');
             return res.status(201).send({
               status:201,
               message:'You have successfully logged in',
@@ -79,6 +81,11 @@ class Users {
       const message = err;
     }
     
+  }
+  secret (req,res) {
+    res.send({
+      message:'i am getting authorised page'
+    })
   }
 
 }
