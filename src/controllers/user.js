@@ -38,26 +38,22 @@ class Users {
             }
         }
         catch(err) {
-          console.log(err);
+          res.status(203).send({
+            status:501,
+            message:err
+          })
         }
     }
-
-
-
-
-
-
   // function that do login operationscompareHashedPassword
 
   static async auth(req,res) {
     // body...
     const {email,password} = req.body;
 
-
     try{
       const userfindOne = await users.findOne({where:{email}});
         if (userfindOne) {
-          
+
           if (compareHashedPassword(password,userfindOne.password)) {
             const user = {
               id:userfindOne.id,
@@ -90,9 +86,6 @@ class Users {
     }
     
   }
-
-
-
 
   static secret (req,res) {
     return res.send({

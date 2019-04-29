@@ -17,8 +17,7 @@ class Coops {
 					message:'The cooperative with that tin exists',
 					coopname:findOne.coopName
 				})
-			}
-			else{
+			}else{
 				const createCoop = await coops.create({
 					coopName,
 					coopLocation,
@@ -36,23 +35,17 @@ class Coops {
 							coopLicense:createCoop.coopLicense
 						}
 					})
-				} else {
-
-				}
+				} 
 			}
 		}
 		catch(err){
 			res.send({
-				message:err
+				status:501,
+				message:Check internet connection!
 			})
 		}
 	}
-
-	
-
-
 }
 
 // export coops  
-
-export default Coops;
+export default Coops
