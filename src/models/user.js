@@ -19,25 +19,41 @@ const User = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'false'
     },
+    role:{
+      type:DataTypes.STRING,
+      defaultValue: null
+    }
+    isverified:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'false'
+    },
     status: {
       type:DataTypes.STRING,
-      defaultValue:'pending '
+      defaultValue:'inactive '
     },
     adress: {
       type: DataTypes.STRING
     },
     tel: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     },
-    tin: {
-      type: DataTypes.STRING
+    ID: {
+      type: DataTypes.STRING,
+      unique:true
     },
     jobtitle: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false
     },
+    image:{
+      type: DataTypes.STRING,
+      defaultValue:null
+    }
   }, {});
   users.associate = function(models) {
     // associations can be defined here
+   
   };
   return users;
 };

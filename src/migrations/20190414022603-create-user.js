@@ -23,6 +23,13 @@ module.exports = {
       isadmin: {
         type: Sequelize.STRING
       },
+      role:{
+        type:Sequelize.STRING,
+
+      },
+      isverified: {
+        type: Sequelize.BOOLEAN
+      },
       status: {
         type: Sequelize.STRING
       },
@@ -32,12 +39,16 @@ module.exports = {
       tel: {
         type: Sequelize.STRING
       },
-      tin: {
+      ID: {
         type: Sequelize.STRING
       },
       jobtitle: {
         type: Sequelize.STRING
       },
+      image:{
+        type: Sequelize.STRING,
+        
+      }
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

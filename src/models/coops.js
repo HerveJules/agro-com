@@ -7,17 +7,26 @@ const coop = (sequelize, DataTypes) => {
     coopLocation: {
       type:DataTypes.STRING
     },
-    coopLicense: {
+    RBCertificate: {
       type:DataTypes.STRING
     },
-    coopReaderName: {
+    RAClearance: {
       type:DataTypes.STRING
     },
-    coopReaderId: {
+    tin: {
       type:DataTypes.STRING
+    },
+    coopAgrees:{
+      type: DataTypes.STRING
     },
     coopEmail: {
       type:DataTypes.STRING
+    },
+    coopSignL:{
+      type: DataTypes.STRING
+    },
+    leaderCert:{
+      type: DataTypes.STRING
     }
   }, {});
   coops.associate = function(models) {

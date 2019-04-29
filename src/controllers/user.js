@@ -4,9 +4,10 @@ import bcrypt from 'bcrypt';
 import {compareHashedPassword, generateHash} from '../helpers';
 import validation from '../middleware/validations';
 import secret from '../config/secretKey.js';
+import jwtpassport from '../config/passport'
 const secretKey = secret.secretKey
 const { users } = db;
-
+const {sessionData} = jwtpassport;
 class Users {
 
     static async createUser(req, res) {
@@ -54,7 +55,7 @@ class Users {
 
 
     try{
-      const userfindOne = await users.findOne({where:{email}})
+      const userfindOne = await users.findOne({where:{email}});
         if (userfindOne) {
           
           if (compareHashedPassword(password,userfindOne.password)) {
@@ -62,7 +63,7 @@ class Users {
               id:userfindOne.id,
               tin:userfindOne.tin
             }
-            const token = jwt.sign(user,'agro-comauthorisationcode');
+            const token = jwt.sign(user,secretKey);
             return res.status(201).send({
               status:201,
               message:'You have successfully logged in',
@@ -93,8 +94,10 @@ class Users {
 
 
 
-  secret (req,res) {
-    console.log('i will manage it here!')
+  static secret (req,res) {
+    return res.send({
+      message:'authorized'
+    })
   }
 
 }

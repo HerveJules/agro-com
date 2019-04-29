@@ -1,53 +1,52 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('coops', {
+    return queryInterface.createTable('bidders', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      coopName: {
+      compName: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      coopLocation: {
+      compLocation: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      // RDB certificate
+      compEmail: {
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      compWeb: {
+        type: Sequelize.STRING
+      },
       RBCertificate: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      // RRA clearance certificate
-      RAClearance:{
+      compAgrees: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      // cooperative tin number
-      tin: {
-        type: Sequelize.INTEGER,
-        allowNull:false,
-        unique:true
-      },
-      //terms and agreement of cooperative
-      coopAgrees: {
+      LeaderSignL: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      coopEmail: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      //leaders signature letter
-      coopSignL:{
+      BankHis: {
         type: Sequelize.STRING,
         allowNull:false
       },
-      // cooperative leader certificate
-      leaderCert:{
+      RACertificate: {
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      compLogo: {
+        type: Sequelize.STRING
+      },
+      compAuditR: {
         type: Sequelize.STRING,
         allowNull:false
       },
@@ -62,6 +61,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('coops');
+    return queryInterface.dropTable('bidders');
   }
 };
