@@ -6,8 +6,8 @@ class Coops {
 	// creating a function for add cooperative
 	static async createCoop(req,res){
 		// destructing data from body
-		const {coopName,coopLocation,coopLicense,coopReaderName,coopReaderId,coopEmail} = req.body;
-
+		const {coopName,coopLocation,tin,coopEmail} = req.body;
+		const {RBCertificate,RAClearance,coopAgrees,coopSignL,leaderCert} = req.file;
 		// try and catch to find if not exist create new coop
 		try{
 			// find if exist
@@ -21,10 +21,13 @@ class Coops {
 				const createCoop = await coops.create({
 					coopName,
 					coopLocation,
-					coopLicense,
-					coopReaderName,
-					coopReaderId,
-					coopEmail
+					RBCertificate, 
+					RAClearance,
+					tin,
+					coopAgrees,
+					coopEmail,
+					coopSignL,
+					leaderCert
 				});
 				if (createCoop) {
 					res.status(201).send({

@@ -31,6 +31,15 @@ const coop = (sequelize, DataTypes) => {
   }, {});
   coops.associate = function(models) {
     // associations can be defined here
+    // coops belongs to user model
+    coops.belongsTo(models.user,{
+      foreignKey: 'user_id'
+    });
+    // coops has many store
+    coops.hasMany(models.store,{
+      foreignKey:'coops_id',
+      as:'store'
+    })
   };
   return coops;
 };

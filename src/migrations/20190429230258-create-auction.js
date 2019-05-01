@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       quantity: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       bidder_tin: {
         type: Sequelize.INTEGER
@@ -21,7 +22,8 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       end_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,

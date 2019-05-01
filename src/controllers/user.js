@@ -12,7 +12,9 @@ class Users {
 
     static async createUser(req, res) {
         const {
-            email, password, jobtitle, tin
+            firstname, lastname, email, password, 
+            isadmin, role, isverified, status, 
+            adress, tel, ID, jobtitle, image  
         } = req.body                
         try {
             const userFind = await users.findOne({ where: { email}})

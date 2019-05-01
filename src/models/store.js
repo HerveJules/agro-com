@@ -2,6 +2,9 @@
   type: 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const store = sequelize.define('store', {
+    productName:{
+      type: DataTypes.STRING
+    },
     quality: {
       type: DataTypes.STRING,
     },
@@ -11,15 +14,22 @@ module.exports = (sequelize, DataTypes) => {
     storeStation: {
       type: DataTypes.STRING,
     },
-    product: {
-      type: DataTypes.STRING,
-    },
     MaxLifetime: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      defaultValue:null
     },
   }, {});
   store.associate = function(models) {
     // associations can be defined here
+    // store belongs to coops
+    store.belongsTo(models.coops,{
+      foreignKey:'coops_id'
+    });
+    // store has many auction
+    store.hasMany(models.auction,{
+      foreignKey:'store_id',
+      as:'auction'
+    })
   };
   return store;
 };

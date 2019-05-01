@@ -8,17 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      productName:{
+        type: Sequelize.STRING,
+        allowNull:false
+      },
       quality: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       quantity: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       storeStation: {
-        type: Sequelize.STRING
-      },
-      product: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       MaxLifetime: {
         type: Sequelize.DATE

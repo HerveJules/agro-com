@@ -39,6 +39,11 @@ const bidder = (sequelize, DataTypes) => {
   }, {});
   bidders.associate = function(models) {
     // associations can be defined here
+    // bidders belongs to users
+
+    bidders.belongsTo(models.users,{
+      foreignKey:'user_id'
+    })
   };
   return bidders;
 };

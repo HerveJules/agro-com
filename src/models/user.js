@@ -53,7 +53,16 @@ const User = (sequelize, DataTypes) => {
   }, {});
   users.associate = function(models) {
     // associations can be defined here
-   
+    // user model has one association with coops
+    users.hasOne(models.coops,{
+      foreignKey:'user_id',
+      as:'coops'
+    });
+    // user model has one association with bidders
+    users.hasOne(models.bidders,{
+      foreignKey:'user_id',
+      as:'bidders'
+    })
   };
   return users;
 };
