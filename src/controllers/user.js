@@ -26,7 +26,7 @@ class Users {
             }
 
             const encryptedPassword = await generateHash(password);
-            const userSave = await users.create({ email, password:encryptedPassword, jobtitle, tin});
+            const userSave = await users.create({ email, password:encryptedPassword, jobtitle, ID});
             if(userSave) {
               return res.status(201).send({
                 status:201,

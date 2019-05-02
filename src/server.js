@@ -1,6 +1,7 @@
 import express from 'express';
 import user from './routes/user'
 import validators from './middleware/validations';
+import multerUploads from './middleware/multer';
 const app = express();
 
     

@@ -2,7 +2,7 @@
 const bidder = (sequelize, DataTypes) => {
   const bidders = sequelize.define('bidders', {
     compName: {
-      DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     compLocation: {
       type: DataTypes.STRING,
@@ -41,9 +41,7 @@ const bidder = (sequelize, DataTypes) => {
     // associations can be defined here
     // bidders belongs to users
 
-    bidders.belongsTo(models.users,{
-      foreignKey:'user_id'
-    })
+    bidders.belongsTo(models.users)
   };
   return bidders;
 };

@@ -22,7 +22,7 @@ const User = (sequelize, DataTypes) => {
     role:{
       type:DataTypes.STRING,
       defaultValue: null
-    }
+    },
     isverified:{
       type: DataTypes.BOOLEAN,
       defaultValue: 'false'
@@ -54,15 +54,12 @@ const User = (sequelize, DataTypes) => {
   users.associate = function(models) {
     // associations can be defined here
     // user model has one association with coops
-    users.hasOne(models.coops,{
-      foreignKey:'user_id',
-      as:'coops'
-    });
+    // users.hasOne(models.coops,{
+    //   foreignKey:'user_id',
+    //   as:'coops'
+    // });
     // user model has one association with bidders
-    users.hasOne(models.bidders,{
-      foreignKey:'user_id',
-      as:'bidders'
-    })
+    users.hasOne(models.bidders)
   };
   return users;
 };

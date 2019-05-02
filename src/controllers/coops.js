@@ -44,7 +44,7 @@ class Coops {
 		catch(err){
 			res.send({
 				status:501,
-				message:Check internet connection!
+				message:'Check internet connection!'
 			})
 		}
 	}

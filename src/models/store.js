@@ -1,6 +1,5 @@
-{
-  type: 'use strict';
-module.exports = (sequelize, DataTypes) => {
+
+const Store = (sequelize, DataTypes) => {
   const store = sequelize.define('store', {
     productName:{
       type: DataTypes.STRING
@@ -33,3 +32,5 @@ module.exports = (sequelize, DataTypes) => {
   };
   return store;
 };
+
+export default Store;
