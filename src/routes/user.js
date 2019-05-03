@@ -4,9 +4,9 @@ import Coop from '../controllers/coops';
 import Bidder from '../controllers/bidders';
 import passport from 'passport';
 import passportAuth from '../config/passport';
-import {multerUploads,dataUri} from '../middleware/multer';
-import {cloudinary,uploader} from '../config/cloudinary';
+import { uploader, cloudinaryConfig } from '../config/cloudinaryConfig'
 
+import { multerUploads, dataUri } from '../middleware/multerUpload';
 const router = express.Router();
 
 router.post('/api/v1/auth/signup', User.createUser);
@@ -19,30 +19,44 @@ router.post('/api/v1/add/bidders',Bidder.add);
 
 router.get('/api/v1/secret',passport.authenticate('jwt',{session:false}),User.secret);
 
-router.post('/upload', multerUploads, (req,res) => {
-	if (req.file) {
-		const file = dataUri(req).content;
-		console.log(file);
+router.use('/upload', cloudinaryConfig);
 
-		return uploader.upload(file).then( result => {
-			const image = result.url;
-			return res.status(201).send({
-				message:'uploaded successfully',
-				data:{
-					image,
-					size:result.size,
-					format:result.format
-				}
-			})
-		}).catch(err =>{
-			return res.status(400).send({
-				message:'something went wrong while uploading your files',
-				data:{
-					err
-				}
-			})
+	router.post('/upload', multerUploads, (req, res) => {
+
+	if(req.files) {
+
+	const file = dataUri(req).content;
+
+	return uploader.upload(file).then((result) => {
+
+		const image = result.url;
+
+		return res.status(200).json({
+
+			messge: 'Your image has been uploded successfully to cloudinary',
+
+			data: {
+
+				image
+
+			}
+
 		})
+
+	}).catch((err) => res.status(400).json({
+
+		messge: 'someting went wrong while processing your request',
+
+		data: {
+
+			err
+
+		}
+
+		}))
+
 	}
-})
+
+});
 	
 export default router;
