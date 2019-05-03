@@ -32,6 +32,30 @@ class bidder{
 		// })
 
 		// query data to insert
+
+		// const {compName,compLocation}=req.body;
+		// const{BankHis,compLogo}=req.body;
+		console.log('========>>',email);
+		users.create({
+			email,
+			password,
+			jobtitle,
+			ID
+		}).then((user)=>{
+			user.addBidder({
+				compName,
+				compLocation,
+				compEmail,
+				compWeb,
+				RBCertificate,
+				compAgrees,
+				LeaderSignL,
+				BankHis,
+				RACertificate,
+				compLogo,
+				compAuditR
+			})
+		})
 	}
 
 	static find(req,res){
