@@ -19,17 +19,17 @@ app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'})    
 });
 
-Shop.create({
-	name:'simba'
-}).then( shop =>{
-	shop.createCoffee({
-		name:'colombian',
-		type:'dark'
-	}).then(()=> {
-		console.log('worked');
-		console.log(uuid());
-	});
-})
+// Shop.create({
+// 	name:'simba'
+// }).then( shop =>{
+// 	shop.createCoffee({
+// 		name:'colombian',
+// 		type:'dark'
+// 	}).then(()=> {
+// 		console.log('worked');
+// 		console.log(uuid());
+// 	});
+// })
 
 app.use(user);
 
