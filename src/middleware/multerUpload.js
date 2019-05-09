@@ -1,25 +1,25 @@
 import multer from 'multer';
 
-import Datauri from 'datauri';
+// const storage = multer.distStorage();
 
-import path from 'path';
-
-const storage = multer.memoryStorage();
-
-const multerUploads = multer({
-	storage,
+const Uploads = multer({
+	storage: multer.diskStorage({}),
 	// limits:{fileSize:100},
-	// fileFilter:(file,done)=>{
+	// fileFilter:(req,file,done)=>{
+	// 	if (!file.mimetype.match(/jpg|png|jpeg|pdf/)) {
+	// 		done(new Error('File is not supported!'),false);
+	// 		return
+	// 	}
+	// 	done(null,true);
 	// 	const fileType = /jpg|png|pdf|jpeg|gif/
 	// 	const extename = fileType.test(path.extname(file.originalname).toLowerCase());
 	// }
-}).single('userPhoto');
+})
 
-const dUri = new Datauri();
+// const dUri = new Datauri();
 
-const dataUri = (req) => {
-	return dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+// const dataUri = (req) => {
+// 	return dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 	
-}
-
-export { multerUploads, dataUri };
+// }
+export default Uploads;

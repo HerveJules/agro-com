@@ -9,10 +9,10 @@ const router = express.Router();
 
 router.post('/api/v1/add/bidders',Bidder.add);
 
-router.get('/api/v1/secret',passport.authenticate('jwt',{session:false}),User.secret);
+// router.get('/api/v1/secret',passport.authenticate('jwt',{session:false}),User.secret);
 
 router.use('/upload', cloudinaryConfig);
 
-router.post('/upload', multerUploads,Coop.uploadFile);
+// router.post('/upload', multerUploads,Coop.uploadFile);
 	
 export default router;

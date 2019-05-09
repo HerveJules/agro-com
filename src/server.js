@@ -1,5 +1,9 @@
 import express from 'express';
-import user from './routes/user'
+import user from './routes/user';
+import coops from './routes/coops';
+import bidders from './routes/bidders';
+import auction from './routes/auction';
+import store from './routes/store';
 import validators from './middleware/validations';
 import db from './models';
 import uuid from 'uuid';
@@ -32,7 +36,10 @@ app.get('/', (req, res) => {
 // })
 
 app.use(user);
-
+app.use(coops);
+app.use(bidders);
+app.use(auction);
+app.use(store);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
