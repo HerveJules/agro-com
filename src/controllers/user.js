@@ -5,9 +5,7 @@ import {compareHashedPassword, generateHash} from '../helpers';
 import validation from '../middleware/validations';
 import secret from '../config/secretKey.js';
 import jwtpassport from '../config/passport';
-import gen from '../helpers/cloudHelper';
-import {cloudinaryConfig, uploader } from '../config/cloudinaryConfig'
-import { multerUploads, dataUri} from '../middleware/multerUpload';
+import {cloudinaryConfig, uploader } from '../config/cloudinaryConfig';
 
 
 const secretKey = secret.secretKey

@@ -7,6 +7,7 @@ import store from './routes/store';
 import validators from './middleware/validations';
 import db from './models';
 import uuid from 'uuid';
+
 const {Shop,Coffee} = db;
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/v1/auth',validators.validatePassword);
 app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'})    
 });
+
 
 // Shop.create({
 // 	name:'simba'
