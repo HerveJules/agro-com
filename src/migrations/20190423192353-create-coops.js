@@ -1,67 +1,70 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('coops', {
+    return queryInterface.createTable('Coops', {
       id: {
-        allowNull: false,
+        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       coopName: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       coopLocation: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       // RDB certificate
       RBCertificate: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       // RRA clearance certificate
       RAClearance:{
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       // cooperative tin number
       tin: {
-        type: Sequelize.INTEGER,
-        allowNull:false,
+        type: Sequelize.STRING,
+        // allowNull:false,
         unique:true
       },
       //terms and agreement of cooperative
       coopAgrees: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       coopEmail: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       //leaders signature letter
       coopSignL:{
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       // cooperative leader certificate
       leaderCert:{
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       createdAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
+      },
+      UserId:{
+        type: Sequelize.INTEGER
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('coops');
+    return queryInterface.dropTable('Coops');
   }
 }

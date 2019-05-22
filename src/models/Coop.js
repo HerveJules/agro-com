@@ -1,6 +1,6 @@
 // 'use strict';
-const coop = (sequelize, DataTypes) => {
-  const coops = sequelize.define('coops', {
+const coops = (sequelize, DataTypes) => {
+  const Coop = sequelize.define('Coop', {
     coopName: {
       type:DataTypes.STRING
     },
@@ -29,19 +29,11 @@ const coop = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   }, {});
-  coops.associate = function(models) {
+  Coop.associate = function(models) {
     // associations can be defined here
-    // coops belongs to user model
-    // coops.belongsTo(models.user,{
-    //   foreignKey: 'user_id'
-    // });
-    // coops has many store
-    coops.hasMany(models.store,{
-      foreignKey:'coops_id',
-      as:'store'
-    })
+    Coop.belongsTo(models.User);
   };
-  return coops;
+  return Coop;
 };
 
-export default coop;
+export default coops;

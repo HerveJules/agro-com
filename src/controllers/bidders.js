@@ -1,6 +1,6 @@
 import db from '../models';
 
-const {Bidders,users} = db;
+const {Bidders,User} = db;
 
 class bidder{
 

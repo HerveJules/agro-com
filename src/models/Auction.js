@@ -23,9 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   auction.associate = function(models) {
     // associations can be defined here
     // auction belongs to store
-    auction.belongsTo(models.store,{
-      foreignKey:'store-id'
-    })
+    auction.belongsTo(models.auction)
   };
   return auction;
 };

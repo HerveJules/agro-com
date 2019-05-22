@@ -1,14 +1,10 @@
 import express from 'express';
 import passport from 'passport';
 import passportAuth from '../config/passport';
-import {cloudinaryConfig } from '../config/cloudinaryConfig'
+import store from '../controllers/store';
+import { multerUploads} from '../helpers/multer';
+
 const router = express.Router();
-// store routes
-
-// router.get('/api/v1/secret',passport.authenticate('jwt',{session:false}),User.secret);
-
-// router.use('/upload', cloudinaryConfig);
-
-// router.post('/upload', multerUploads,Coop.uploadFile);
+router.post('/upload', multerUploads,store.addStore);
 	
 export default router;

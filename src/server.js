@@ -7,15 +7,17 @@ import store from './routes/store';
 import validators from './middleware/validations';
 import db from './models';
 import uuid from 'uuid';
+import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
+import { multerUploads} from './helpers/multer';
 
-const {Shop,Coffee} = db;
+const {User,Coop} = db;
 const app = express();
 
-    
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}))      
+app.use(bodyParser.json())   
 // middleware validate emails and password strengthen
+// app.use('*',multerUploads);
 app.use('/api/v1/auth',validators.validateEmail);
 
 app.use('/api/v1/auth',validators.validatePassword);
@@ -25,16 +27,19 @@ app.get('/', (req, res) => {
 });
 
 
-// Shop.create({
-// 	name:'simba'
+// User.create({
+// 	firstname:'simba',
+// 	lastname:'kikongo',
+// 	email:'herve@gmail.com',
+// 	password:'123456Telphone'
 // }).then( shop =>{
-// 	shop.createCoffee({
-// 		name:'colombian',
-// 		type:'dark'
+// 	shop.createCoop({
+// 		tin:'123456489',
 // 	}).then(()=> {
 // 		console.log('worked');
-// 		console.log(uuid());
 // 	});
+// }).catch(err =>{
+// 	console.log(err + "2nd")
 // })
 
 app.use(user);

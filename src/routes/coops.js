@@ -1,11 +1,10 @@
 import express from 'express';
 import Coop from '../controllers/coops';
-import {cloudinaryConfig } from '../config/cloudinaryConfig'
-import upload from '../helpers/multer';
-
+import cloudinary from 'cloudinary';
+import { multerUploads} from '../helpers/multer';
+import {dataUri } from '../helpers/multer';
 const router = express.Router();
 
-router.post('/api/v1/add/coop',Coop.createCoop);
-
+router.post('/api/v1/add/coop',multerUploads,Coop.createCoop);
 	
 export default router;

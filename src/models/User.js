@@ -1,6 +1,6 @@
 
 const User = (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const User = sequelize.define('User', {
     firstname: {
       type: DataTypes.STRING
     },
@@ -9,7 +9,7 @@ const User = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       unique: true
     },
     password: { 
@@ -44,24 +44,18 @@ const User = (sequelize, DataTypes) => {
     },
     jobtitle: {
       type: DataTypes.STRING,
-      allowNull:false
+      // allowNull:false
     },
     image:{
       type: DataTypes.STRING,
       defaultValue:null
     }
   }, {});
-  users.associate = function(models) {
+  User.associate = function(models) {
     // associations can be defined here
-    // user model has one association with coops
-    // users.hasOne(models.coops,{
-    //   foreignKey:'user_id',
-    //   as:'coops'
-    // });
-    // user model has one association with bidders
-    users.hasOne(models.bidders)
+    User.hasOne(models.Coop);
   };
-  return users;
+  return User;
 };
 
 export default User;

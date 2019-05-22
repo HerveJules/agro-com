@@ -9,7 +9,7 @@ import {cloudinaryConfig, uploader } from '../config/cloudinaryConfig';
 
 
 const secretKey = secret.secretKey
-const { users } = db;
+const { User } = db;
 const {sessionData} = jwtpassport;
 class Users {
 
@@ -20,7 +20,7 @@ class Users {
             adress, tel, ID, jobtitle, image  
         } = req.body                
         try {
-            const userFind = await users.findOne({ where: { email}})
+            const userFind = await User.findOne({ where: { email}})
             if(userFind) {
               return res.status(400).send({
                 status:400,
@@ -29,7 +29,7 @@ class Users {
             }
 
             const encryptedPassword = await generateHash(password);
-            const userSave = await users.create({ email, password:encryptedPassword, jobtitle, ID});
+            const userSave = await User.create({ email, password:encryptedPassword, jobtitle, ID});
             if(userSave) {
               return res.status(201).send({
                 status:201,
@@ -56,7 +56,7 @@ class Users {
     const {email,password} = req.body;
 
     try{
-      const userfindOne = await users.findOne({where:{email}});
+      const userfindOne = await User.findOne({where:{email}});
         if (userfindOne) {
 
           if (compareHashedPassword(password,userfindOne.password)) {
