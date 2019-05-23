@@ -54,6 +54,7 @@ const User = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.hasOne(models.Coop);
+    User.hasOne(models.Bidder);
   };
   return User;
 };

@@ -17,6 +17,7 @@ class Coops {
 		try{
 		// 	// find if exist
 			const findOne = await Coop.findOne({where: {tin}});
+			
 			if (findOne){
 				res.status(403).send({
 					message:'The cooperative with that tin exists',

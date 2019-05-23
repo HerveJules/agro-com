@@ -15,9 +15,7 @@ const {User,Coop} = db;
 const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}))      
-app.use(bodyParser.json())   
-// middleware validate emails and password strengthen
-// app.use('*',multerUploads);
+app.use(bodyParser.json());
 app.use('/api/v1/auth',validators.validateEmail);
 
 app.use('/api/v1/auth',validators.validatePassword);

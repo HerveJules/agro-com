@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('bidders', {
+    return queryInterface.createTable('Bidders', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false
       },
+      tin:{
+        type:Sequelize.STRING,
+        allowNull:false
+      },
       compEmail: {
         type: Sequelize.STRING,
         allowNull:false
@@ -25,30 +29,30 @@ module.exports = {
       },
       RBCertificate: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       compAgrees: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       LeaderSignL: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       BankHis: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       RACertificate: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       compLogo: {
         type: Sequelize.STRING
       },
       compAuditR: {
         type: Sequelize.STRING,
-        allowNull:false
+        // allowNull:false
       },
       createdAt: {
         allowNull: false,
@@ -58,12 +62,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      user_id:{
+      UserId:{
         type: Sequelize.INTEGER
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('bidders');
+    return queryInterface.dropTable('Bidders');
   }
 };
