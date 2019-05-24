@@ -73,6 +73,16 @@ class bidder{
 		}
 	}
 
+	static fetch(req,res){
+		User.findAll({
+			include:[Bidder]
+		}).then(bidders =>{
+			console.log(bidders[1].Bidder);
+		}).catch(err =>{
+			console.log(err);
+		})
+	}
+
 }
 
 export default bidder;

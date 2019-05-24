@@ -21,7 +21,7 @@ function validateEmail(req,res,next){
 
 
 function validatePassword(req,res,next){
-	const {email,password} = req.body;
+	const {password} = req.body;
 	const schema = new passwdValidator();
 
 	schema.is().min(8);

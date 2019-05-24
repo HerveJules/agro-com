@@ -32,6 +32,7 @@ const coops = (sequelize, DataTypes) => {
   Coop.associate = function(models) {
     // associations can be defined here
     Coop.belongsTo(models.User);
+    Coop.hasMany(models.Store);
   };
   return Coop;
 };

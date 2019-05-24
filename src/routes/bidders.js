@@ -6,5 +6,7 @@ import { multerUploads} from '../helpers/multer';
 const router = express.Router();
 
 router.post('/api/v1/add/bidders',multerUploads,Bidder.addBidder);
+
+router.get('/api/v1/get/bidders', Bidder.fetch);
 	
 export default router;
