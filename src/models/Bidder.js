@@ -1,6 +1,11 @@
 'use strict';
 const bidder = (sequelize, DataTypes) => {
   const Bidder = sequelize.define('Bidder', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
     compName: {
       type: DataTypes.STRING,
     },

@@ -1,6 +1,11 @@
 // 'use strict';
 const coops = (sequelize, DataTypes) => {
   const Coop = sequelize.define('Coop', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
     coopName: {
       type:DataTypes.STRING
     },

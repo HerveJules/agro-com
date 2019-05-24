@@ -1,6 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const auction = sequelize.define('auction', {
+  const Auction = sequelize.define('Auction', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
     quantity: {
       type: DataTypes.STRING,
     },
@@ -20,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   }, {});
-  auction.associate = function(models) {
+  Auction.associate = function(models) {
     // associations can be defined here
     // auction belongs to store
-    auction.belongsTo(models.auction)
+    Auction.belongsTo(models.Store);
   };
-  return auction;
+  return Auction;
 };

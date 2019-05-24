@@ -4,9 +4,8 @@ module.exports = {
     return queryInterface.createTable('Bidders', {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        primaryKey: true
       },
       compName: {
         type: Sequelize.STRING,
@@ -29,30 +28,30 @@ module.exports = {
       },
       RBCertificate: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       compAgrees: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       LeaderSignL: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       BankHis: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       RACertificate: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       compLogo: {
         type: Sequelize.STRING
       },
       compAuditR: {
         type: Sequelize.STRING,
-        // allowNull:false
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
@@ -63,7 +62,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       UserId:{
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       }
     });
   },

@@ -1,12 +1,11 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('stores', {
+    return queryInterface.createTable('Stores', {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        primaryKey: true
       },
       productName:{
         type: Sequelize.STRING,
@@ -25,7 +24,7 @@ module.exports = {
         allowNull:false
       },
       MaxLifetime: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -36,11 +35,11 @@ module.exports = {
         type: Sequelize.DATE
       },
       CoopId:{
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('stores');
+    return queryInterface.dropTable('Stores');
   }
 };

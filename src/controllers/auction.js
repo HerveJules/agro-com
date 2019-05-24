@@ -1,33 +1,27 @@
-import db from './models';
+import db from '../models';
 
-const {auctions,store} = db;
+const {Auction} = db;
 
 // auction operations goes here
 
 class auction {
 
-	static async addAuction(req,res){
+	static addAuction(req,res){
 		 
-		try{
-			//select product from store
-			const product = await store.findOne({id});
-			// add product to auction 
-			if (product) {
-				const id = product.id;
-				const saveAuction = await auctions.create({quantity});
-				if (saveAuction) {
-					return res.status(201).send({
-						status:201,
-						message:'product has been published to auction platform'
-					})
+		Auction.create({...req.body,StoreId:req.params.StoreId}).then(result =>{
+			
+			res.status(200).send({
+				message:'Product has been published to Auction successfully!',
+				data:{
+					result,
 				}
-			}
-		}catch((err)=>{
-			return res.send({
-				status:501,
-				message:err
 			})
-		})
+		}).catch(err =>{
+			res.status(203).send({
+				message:'Something went wrong while Publishing to Auction',
+				error:err,
+			})
+		});
 		
 	}
 
