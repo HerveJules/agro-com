@@ -1,5 +1,6 @@
 import db from '../models';
 import cloud from '../helpers/clouds';
+import {generateHash} from '../helpers';
 const {User, Bidder} = db;
 
 class bidder{
@@ -11,9 +12,8 @@ class bidder{
 		const {
             firstname, lastname, email, password, role,
             adress, tel, ID, jobtitle, image, 
-            compName, compLocation, tin, compEmail, compWeb  
+            compName, compLocation,tin, compEmail, compWeb  
         } = req.body 
-        
 		// // try and catch to find if not exist create new coop
 		try{
 		// 	// find if exist
@@ -26,11 +26,12 @@ class bidder{
 				})
 			}else{
 				const links = await cloud(req.files);
+				const hashPass = await generateHash(password);
 				const createCoop = await User.create({
 					firstname,
 					lastname,
 					email,
-					password,
+					password:hashPass,
 					jobtitle,
 					ID,
 					image:links[0],

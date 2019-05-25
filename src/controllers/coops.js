@@ -1,5 +1,6 @@
 import db from '../models';
 import cloud from '../helpers/clouds';
+import {generateHash} from '../helpers';
 const {User,Coop} = db;
 
 class Coops {
@@ -8,8 +9,7 @@ class Coops {
 	static async createCoop(req,res){
 		// destructing data from body
 		 const {
-            firstname, lastname, email, password, 
-            isadmin, role, isverified, status, 
+            firstname, lastname, email, password, role,
             adress, tel, ID, jobtitle, image  
         } = req.body 
 		const {coopName,coopLocation,tin,coopEmail} = req.body;
@@ -25,14 +25,18 @@ class Coops {
 				})
 			}else{
 				const links = await cloud(req.files);
-
+				const hashPass = await generateHash(password);
 				const createCoop = await User.create({
 					firstname,
 					lastname,
 					email,
-					password,
+					password:hashPass,
 					jobtitle,
-					ID
+					ID,
+					image:links[0],
+					role,
+					adress,
+					tel
 				}).then( user => {
 					user.createCoop({
 						coopName,
@@ -54,7 +58,10 @@ class Coops {
 						})
 					})
 				}).catch(err =>{
-					console.log(err);
+					res.send({
+						status:501,
+						error:err
+					})
 				}) 
 			}
 		}

@@ -5,7 +5,7 @@ import passportAuth from '../config/passport';
 import { multerUploads} from '../helpers/multer';
 const router = express.Router();
 
-router.post('/api/v1/add/bidders',multerUploads,Bidder.addBidder);
+router.post('/api/v1/add/bidders',Bidder.addBidder);
 
 router.get('/api/v1/get/bidders', Bidder.fetch);
 	

@@ -5,6 +5,6 @@ import { multerUploads} from '../helpers/multer';
 import {dataUri } from '../helpers/multer';
 const router = express.Router();
 
-router.post('/api/v1/add/coop',multerUploads,Coop.createCoop);
+router.post('/api/v1/add/coop',Coop.createCoop);
 	
 export default router;

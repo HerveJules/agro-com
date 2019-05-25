@@ -16,9 +16,10 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}))      
 app.use(bodyParser.json());
-app.use('/api/v1/auth',validators.validateEmail);
+app.use(multerUploads);
+app.use('/api/v1',validators.validateEmail);
 
-app.use('/api/v1/auth',validators.validatePassword);
+app.use('/api/v1',validators.validatePassword);
 
 app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'})    

@@ -6,6 +6,7 @@ import validation from '../middleware/validations';
 import secret from '../config/secretKey.js';
 import jwtpassport from '../config/passport';
 import {cloudinaryConfig, uploader } from '../config/cloudinaryConfig';
+import cloud from '../helpers/clouds';
 
 
 const secretKey = secret.secretKey
@@ -15,8 +16,7 @@ class Users {
 
     static async createUser(req, res) {
         const {
-            firstname, lastname, email, password, 
-            isadmin, role, isverified, status, 
+            firstname, lastname, email, password, role, 
             adress, tel, ID, jobtitle, image  
         } = req.body                
         try {
@@ -27,26 +27,27 @@ class Users {
                 errorMessage: 'The User with that email exists'
               })
             }
-
+            const links = await cloud(req.files);
             const encryptedPassword = await generateHash(password);
-            const userSave = await User.create({ email, password:encryptedPassword, jobtitle, ID});
+            const userSave = await User.create({ firstname,lastname,email, 
+              password:encryptedPassword,role,adress,tel, jobtitle, ID,image:links[0]});
             if(userSave) {
               return res.status(201).send({
                 status:201,
                 message: 'User has been created',
                 user: {
                   email: userSave.email,
-                  jobtitle: userSave.jobtitle,
-                  tin: userSave.tin
+                  jobtitle: userSave.jobtitle
                 }
               })
             }
         }
         catch(err) {
-          res.status(203).send({
-            status:501,
-            message:err
-          })
+          console.log(err);
+          // res.status(203).send({
+          //   status:501,
+          //   message:err
+          // })
         }
     }
   // function that do login operationscompareHashedPassword

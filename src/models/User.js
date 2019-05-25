@@ -14,11 +14,15 @@ const User = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      // allowNull: false,
+      allowNull: false,
       unique: true
     },
     password: { 
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue:function(){
+        const password = Math.random().toString(36).slice(-8);
+        return password;
+      }
     },
     isadmin: {
       type: DataTypes.STRING,
@@ -49,7 +53,7 @@ const User = (sequelize, DataTypes) => {
     },
     jobtitle: {
       type: DataTypes.STRING,
-      // allowNull:false
+      allowNull:false
     },
     image:{
       type: DataTypes.STRING,
