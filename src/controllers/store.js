@@ -28,7 +28,7 @@ class store{
 
 	static publish(req,res){
 		//find product with tin
-
+		Store.findById({where:{id}});
 		
 	}	
 }
