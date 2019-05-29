@@ -15,7 +15,6 @@ const upload = async (req) => {
 					const image = result.url;
 
 					links.push(image);
-					// return links;
 
 					}).catch((err) =>{
 						return err;

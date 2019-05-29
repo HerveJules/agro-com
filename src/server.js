@@ -42,21 +42,6 @@ app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'})    
 });
 
-// User.create({
-// 	firstname:'simba',
-// 	lastname:'kikongo',
-// 	email:'herve@gmail.com',
-// 	password:'123456Telphone'
-// }).then( shop =>{
-// 	shop.createCoop({
-// 		tin:'123456489',
-// 	}).then(()=> {
-// 		console.log('worked');
-// 	});
-// }).catch(err =>{
-// 	console.log(err + "2nd")
-// })
-
 app.use(user);
 app.use(coops);
 app.use(bidders);

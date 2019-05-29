@@ -33,7 +33,7 @@ class Users {
               password:encryptedPassword,role,adress,tel, jobtitle, ID,image:links[0]});
             if(userSave) {
               return res.status(201).send({
-                status:201,
+                status:res.statusCode,
                 message: 'User has been created',
                 user: {
                   email: userSave.email,
@@ -43,11 +43,10 @@ class Users {
             }
         }
         catch(err) {
-          console.log(err);
-          // res.status(203).send({
-          //   status:501,
-          //   message:err
-          // })
+          res.status(500).send({
+            status:res.statusCode,
+            message:err
+          })
         }
     }
   // function that do login operationscompareHashedPassword

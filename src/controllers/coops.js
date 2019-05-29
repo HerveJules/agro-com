@@ -103,12 +103,14 @@ class Coops {
 						})
 					}).catch(err=>{
 						return res.status(503).send({
+							status:res.statusCode,
 							message:'Something went wrong updating cooperative!',
 							error:err
 						})
 					})
 				}else{
 					return res.status(204).send({
+						status:res.statusCode,
 						message:'No cooperative exist with that Tin',
 					})
 				}
@@ -116,6 +118,7 @@ class Coops {
 			
 		}catch(err){
 			return res.status(503).send({
+				status:res.statusCode,
 				message:'Check your network connection',
 				error:err
 			})
@@ -129,17 +132,22 @@ class Coops {
 			const coopinfo = Coop.findOne({where:{tin}}).then(coop =>{
 				return coop.destroy().then(()=>{
 					res.status(200).send({
+						status:res.statusCode,
 						message:'cooperative destroyed successfully!'
 					})
 				});
 			})
 		}else{	
 			return res.status(416).send({
+				status:res.statusCode,
 				message:'request is not satistiable please fill the form',
 			})
 		}
 	}
-	// 
+	// get all coops
+	static async getCoops(req,res){
+
+	}
 }
 
 // export coops  
