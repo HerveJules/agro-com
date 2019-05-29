@@ -17,14 +17,30 @@ const app = express();
 app.use(bodyParser.urlencoded({extended:true}))      
 app.use(bodyParser.json());
 app.use(multerUploads);
-app.use('/api/v1',validators.validateEmail);
+app.use('/api/v1/add',validators.validateEmail);
 
-app.use('/api/v1',validators.validatePassword);
+app.use('/api/v1/add',validators.validatePassword);
 
+app.get('/', (req, res) => {
+    res.status(200).send({message : 'welcome to agro-com app'}); 
+});
+
+// user page
+app.get('/users', (req, res) => {
+    res.status(200).send({message : 'welcome to users page'});    
+});
+// coops page
+app.get('/coops', (req, res) => {
+    res.status(200).send({message : 'welcome to coops'});   
+});
+// bidders page
+app.get('/bidders', (req, res) => {
+    res.status(200).send({message : 'welcome to bidders'});
+});
+// store page
 app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'})    
 });
-
 
 // User.create({
 // 	firstname:'simba',

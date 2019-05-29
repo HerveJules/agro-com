@@ -73,7 +73,73 @@ class Coops {
 			})
 		}
 	}
-	
+	// update coop function
+	static async updateCoop(req,res){
+		// find coop to update
+		try{
+			const{tin,coopName,coopLocation,coopEmail} = req.body;
+			// check if tin is not null
+			if (tin == "") {
+				res.status(416).send({
+					message:'request not satistiable please fill the form!'
+				})
+			}else{
+				// else tin not null
+				const coopinfo = Coop.findOne({where: {tin}});
+				if (coopinfo) {
+					const update = await Coop.update({
+						coopName,coopLocation,coopEmail
+					},
+					{
+						where:{tin}
+					}).then(coop =>{
+						return res.status(200).send({
+							message:'cooperative has been updated successfully!',
+							data:{
+								name:coop.coopName,
+								location:coop.coopLocation,
+								email:coop.coopEmail
+							}
+						})
+					}).catch(err=>{
+						return res.status(503).send({
+							message:'Something went wrong updating cooperative!',
+							error:err
+						})
+					})
+				}else{
+					return res.status(204).send({
+						message:'No cooperative exist with that Tin',
+					})
+				}
+			}
+			
+		}catch(err){
+			return res.status(503).send({
+				message:'Check your network connection',
+				error:err
+			})
+		}
+	}
+	// delete coop function
+	static async deleteCoop(req,res){
+		// check if tin is not empty
+		const{tin}=req.body;
+		if (req.body.tin != "") {
+			const coopinfo = Coop.findOne({where:{tin}}).then(coop =>{
+				return coop.destroy().then(()=>{
+					res.status(200).send({
+						message:'cooperative destroyed successfully!'
+					})
+				});
+			})
+		}else{	
+			return res.status(416).send({
+				message:'request is not satistiable please fill the form',
+			})
+		}
+	}
+	// 
 }
 
 // export coops  
