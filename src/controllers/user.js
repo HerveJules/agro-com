@@ -1,58 +1,71 @@
-import db from '../models';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import {compareHashedPassword, generateHash} from '../helpers';
-import validation from '../middleware/validations';
-import secret from '../config/secretKey.js';
-import jwtpassport from '../config/passport';
-import {cloudinaryConfig, uploader } from '../config/cloudinaryConfig';
-import cloud from '../helpers/clouds';
+import db from "../models";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { compareHashedPassword, generateHash } from "../helpers";
+import validation from "../middleware/validations";
+import secret from "../config/secretKey.js";
+import jwtpassport from "../config/passport";
+import { cloudinaryConfig, uploader } from "../config/cloudinaryConfig";
+import cloud from "../helpers/clouds";
 
-
-const secretKey = secret.secretKey
+const secretKey = secret.secretKey;
 const { User } = db;
-const {sessionData} = jwtpassport;
+const { sessionData } = jwtpassport;
 class Users {
 
-    static async createUser(req, res) {
-        const {
-            firstname, lastname, email, password,
-            adress, tel, ID, jobtitle, image  
-        } = req.body                
-        try {
-            const userFind = await User.findOne({ where: { email}})
-            if(userFind) {
-              return res.status(400).send({
-                status:400,
-                errorMessage: 'The User with that email exists'
-              })
-            }
-            const links = await cloud(req.files);
-            const encryptedPassword = await generateHash(password);
-            const userSave = await User.create({ firstname,lastname,email, 
-              password:encryptedPassword,adress,tel, jobtitle, ID,image:links[0]});
-            if(userSave) {
-              return res.status(201).send({
-                status:res.statusCode,
-                message: 'User has been created',
-                user: {
-                  email: userSave.email,
-                  jobtitle: userSave.jobtitle
-                }
-              })
-            }
-        }
-        catch(err) {
-          res.status(500).send({
-            status:res.statusCode,
-            message:err
-          })
-        }
+  static async createUser(req, res) {
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      adress,
+      tel,
+      ID,
+      jobtitle,
+    } = req.body;
+    try {
+      const userFind = await User.findOne({ where: { email } });
+      if (userFind) {
+        return res.status(400).send({
+          status: 400,
+          errorMessage: "The User with that email exists"
+        });
+      }
+      const links = await cloud(req.files);
+      console.log(links);
+      const encryptedPassword = await generateHash(password);
+      const userSave = await User.create({
+        firstname,
+        lastname,
+        email,
+        password: encryptedPassword,
+        adress,
+        tel,
+        jobtitle,
+        ID,
+        image: links[0]
+      }, attributes = ['id']);
+      if (userSave) {
+        return res.status(201).send({
+          status: res.statusCode,
+          message: "User has been created",
+          user: {
+            email: userSave.email,
+            jobtitle: userSave.jobtitle,
+          }
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        
+      });
     }
+  }
   // function that do login operationscompareHashedPassword
 
-  static async auth(req,res) {
-    // body...
+  static async auth(req, res) {
     const {email,password} = req.body;
 
     try{
@@ -84,12 +97,48 @@ class Users {
             message:'User does not exists'
           })
         }
-    }catch(err){
+    } catch (err) {
       res.status(203).send({
-        message:err
-      })
+        message: err
+      });
     }
-    
+  }
+
+  static secret(req, res) {
+    return res.send({
+      message: "authorized"
+    });
+  }
+
+  // upload file
+
+  static uploadFile(req, res) {
+    if (req.file) {
+      const file = dataUri(req).content;
+
+      return uploader
+        .upload(file)
+        .then(result => {
+          const image = result.url;
+
+          return res.status(200).json({
+            messge: "Your image has been uploded successfully to cloudinary",
+
+            data: {
+              image
+            }
+          });
+        })
+        .catch(err =>
+          res.status(400).json({
+            messge: "someting went wrong while processing your request",
+
+            data: {
+              err
+            }
+          })
+        );
+    }
   }
 }
 
