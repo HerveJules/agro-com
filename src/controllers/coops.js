@@ -7,67 +7,47 @@ class Coops {
 
 	// creating a function for add cooperative
 	static async createCoop(req,res){
-		// destructing data from body
-		 const {
-            firstname, lastname, email, password, role,
-            adress, tel, ID, jobtitle, image  
-        } = req.body 
-		const {coopName,coopLocation,tin,coopEmail} = req.body;
+		
 		// // try and catch to find if not exist create new coop
-		try{
+		try{ 
+			const {coopName,coopLocation,tin,coopEmail} = req.body;
+			const UserId= req.user.id;
+		
 		// 	// find if exist
 			const findOne = await Coop.findOne({where: {tin}});
-			
-			if (findOne){
-				res.status(403).send({
-					message:'The cooperative with that tin exists',
-					coopname:findOne.tin
+			if (!findOne) {
+				const coudinary_links = await cloud(req.files);
+				const createcoop = Coop.create({
+					coopName,
+					coopLocation,
+					coopEmail,
+					tin,
+					UserId,
+					RBCertificate:coudinary_links[0],
+					RAClearance:coudinary_links[1],
+					coopAgrees:coudinary_links[2],
+					coopSignL:coudinary_links[3],
+					leaderCert:coudinary_links[4]
+				}).then(result =>{
+					return res.status(200).send({
+						status:res.statusCode,
+						message:'cooperative created successfully!',
+						result
+					})
 				})
 			}else{
-				const links = await cloud(req.files);
-				const hashPass = await generateHash(password);
-				const createCoop = await User.create({
-					firstname,
-					lastname,
-					email,
-					password:hashPass,
-					jobtitle,
-					ID,
-					image:links[0],
-					role,
-					adress,
-					tel
-				}).then( user => {
-					user.createCoop({
-						coopName,
-						coopLocation,
-						tin,
-						coopEmail,
-						RBCertificate:links[0],
-						RAClearance:links[1],
-						coopAgrees:links[2],
-						coopSignL:links[3],
-						leaderCert:links[4]
-					}).then((coop)=>{
-						res.status(201).send({
-							message:'Data inserted successfully!',
-							data:{
-								coopname:coop.coopName,
-								cooplocation:coop.coopLocation
-							}
-						})
-					})
-				}).catch(err =>{
-					res.send({
-						status:501,
-						error:err
-					})
-				}) 
+				return res.status(500).send({
+					status:res.statusCode,
+					message:'cooperative with that tin already exist',
+					findOne
+					
+				})
 			}
+			
 		}
 		catch(err){
-			res.send({
-				status:501,
+			res.status(500).send({
+				status:res.statusCode,
 				message:'Check internet connection!',
 				error:err
 			})
@@ -77,47 +57,26 @@ class Coops {
 	static async updateCoop(req,res){
 		// find coop to update
 		try{
-			const{tin,coopName,coopLocation,coopEmail} = req.body;
-			// check if tin is not null
-			if (tin == "") {
-				res.status(416).send({
-					message:'request not satistiable please fill the form!'
-				})
-			}else{
-				// else tin not null
-				const coopinfo = Coop.findOne({where: {tin}});
-				if (coopinfo) {
-					const update = await Coop.update({
-						coopName,coopLocation,coopEmail
-					},
-					{
-						where:{tin}
-					}).then(coop =>{
-						return res.status(200).send({
-							message:'cooperative has been updated successfully!',
+			await User.findOne({where:{id:req.user.id},
+				include:[Coop]
+			}).then(result => {
+					return result.Coop.update({...req.body}).then(done =>{
+						res.status(200).send({
+							status:res.statusCode,
+							message:'cooperative updated successfully!',
 							data:{
-								name:coop.coopName,
-								location:coop.coopLocation,
-								email:coop.coopEmail
+								done
 							}
 						})
-					}).catch(err=>{
-						return res.status(503).send({
-							status:res.statusCode,
-							message:'Something went wrong updating cooperative!',
-							error:err
-						})
 					})
-				}else{
-					return res.status(204).send({
+				}).catch(err =>{
+					return res.status(500).send({
 						status:res.statusCode,
-						message:'No cooperative exist with that Tin',
+						error:`something went wrong while updating please check your cooperative tin`
 					})
-				}
-			}
-			
+				})
 		}catch(err){
-			return res.status(503).send({
+			return res.status(500).send({
 				status:res.statusCode,
 				message:'Check your network connection',
 				error:err
@@ -127,27 +86,47 @@ class Coops {
 	// delete coop function
 	static async deleteCoop(req,res){
 		// check if tin is not empty
-		const{tin}=req.body;
-		if (req.body.tin != "") {
-			const coopinfo = Coop.findOne({where:{tin}}).then(coop =>{
-				return coop.destroy().then(()=>{
-					res.status(200).send({
-						status:res.statusCode,
-						message:'cooperative destroyed successfully!'
-					})
-				});
-			})
-		}else{	
-			return res.status(416).send({
+		try{
+			const{tin}=req.body;
+				await Coop.destroy({where:{tin}}).then(result=>{
+					if (result) {
+						return res.status(200).send({
+							status:res.statusCode,
+							message:'cooperative has been deleted successfully!',
+						})
+					}else{
+						res.status(500).send({
+							status:res.statusCode,
+							message:'cooperative with that tin not exist yet!'
+						})
+					}
+				})
+			
+		}catch(err){
+			return res.status(500).send({
 				status:res.statusCode,
-				message:'request is not satistiable please fill the form',
+				message:'something went wrong while deleting cooperative',
 			})
 		}
 	}
 	// get all coops
 	static async getCoops(req,res){
-
+		try{	
+			await Coop.findAll().then(result =>{
+				return res.status(200).send({
+					status:res.statusCode,
+					message:'All cooperatives fetched successfully!',
+					result,
+				})
+			})
+		}catch(err){
+			res.status(500).send({
+				status:res.statusCode,
+				message:'something went wrong!'
+			})
+		}
 	}
+	// 
 }
 
 // export coops  

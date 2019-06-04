@@ -4,7 +4,6 @@ import coops from './routes/coops';
 import bidders from './routes/bidders';
 import auction from './routes/auction';
 import store from './routes/store';
-import validators from './middleware/validations';
 import db from './models';
 import uuid from 'uuid';
 import bodyParser from 'body-parser';
@@ -17,9 +16,6 @@ const app = express();
 app.use(bodyParser.urlencoded({extended:true}))      
 app.use(bodyParser.json());
 app.use(multerUploads);
-app.use('/api/v1/add',validators.validateEmail);
-
-app.use('/api/v1/add',validators.validatePassword);
 
 app.get('/', (req, res) => {
     res.status(200).send({message : 'welcome to agro-com app'}); 
