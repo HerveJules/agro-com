@@ -7,25 +7,23 @@ import secret from "../config/secretKey.js";
 import jwtpassport from "../config/passport";
 import { cloudinaryConfig, uploader } from "../config/cloudinaryConfig";
 import cloud from "../helpers/clouds";
+import {check,validationResult} from 'express-validator/check';
 
 const secretKey = secret.secretKey;
 const { User } = db;
-const { sessionData } = jwtpassport;
 class Users {
 
   static async createUser(req, res) {
-    const {
-      firstname,
-      lastname,
-      email,
-      password,
-      adress,
-      tel,
-      ID,
-      jobtitle,
-    } = req.body;
+    // throwing error if express-validator found invalid value in route
+    
+    
     try {
-      const userFind = await User.findOne({ where: { email } });
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).send({ errors: errors.array() });
+      }
+
+      const userFind = await User.findOne({ where: { email:req.body.email } });
       if (userFind) {
         return res.status(400).send({
           status: 400,
@@ -33,27 +31,17 @@ class Users {
         });
       }
       const links = await cloud(req.files);
-      console.log(links);
-      const encryptedPassword = await generateHash(password);
+      const encryptedPassword = await generateHash(req.body.password);
       const userSave = await User.create({
-        firstname,
-        lastname,
-        email,
-        password: encryptedPassword,
-        adress,
-        tel,
-        jobtitle,
-        ID,
+        ...req.body,
+        password:encryptedPassword,
         image: links[0]
-      }, attributes = ['id']);
+      });
       if (userSave) {
         return res.status(201).send({
           status: res.statusCode,
           message: "User has been created",
-          user: {
-            email: userSave.email,
-            jobtitle: userSave.jobtitle,
-          }
+          userSave
         });
       }
     } catch (err) {
@@ -103,43 +91,18 @@ class Users {
       });
     }
   }
+  // delete user
+  static async deleteUser(req,res){
+    try{
 
-  static secret(req, res) {
-    return res.send({
-      message: "authorized"
-    });
-  }
-
-  // upload file
-
-  static uploadFile(req, res) {
-    if (req.file) {
-      const file = dataUri(req).content;
-
-      return uploader
-        .upload(file)
-        .then(result => {
-          const image = result.url;
-
-          return res.status(200).json({
-            messge: "Your image has been uploded successfully to cloudinary",
-
-            data: {
-              image
-            }
-          });
-        })
-        .catch(err =>
-          res.status(400).json({
-            messge: "someting went wrong while processing your request",
-
-            data: {
-              err
-            }
-          })
-        );
+    }catch(err){
+      res.status(500).send({
+        status:res.statusCode,
+        error:'something went wrong!'
+      })
     }
   }
+
 }
 
 export default Users;

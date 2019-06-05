@@ -1,4 +1,6 @@
 import db from '../models';
+import vd from 'express-validator/check';
+const {check} = vd;
 const {User,Coop} = db;
 
 class Identity{
@@ -23,6 +25,7 @@ class Identity{
 			})
 		}
 	}
+
 }
 
 export default Identity;
