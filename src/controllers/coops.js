@@ -1,6 +1,7 @@
 import db from '../models';
 import cloud from '../helpers/clouds';
 import {generateHash} from '../helpers';
+import Sequelize from 'sequelize';
 const {User,Coop} = db;
 
 class Coops {
@@ -12,9 +13,12 @@ class Coops {
 		try{ 
 			const {coopName,coopLocation,tin,coopEmail} = req.body;
 			const UserId= req.user.id;
-		
+			const Op = Sequelize.Op;
 		// 	// find if exist
-			const findOne = await Coop.findOne({where: {tin}});
+			const findOne = await Coop.findOne({where: {
+				[Op.or]:[{tin},{UserId}]
+			}
+			});
 			if (!findOne) {
 				const coudinary_links = await cloud(req.files);
 				const createcoop = Coop.create({
@@ -38,19 +42,19 @@ class Coops {
 			}else{
 				return res.status(500).send({
 					status:res.statusCode,
-					message:'cooperative with that tin already exist',
-					findOne
+					message:'something went wrong!'
 					
 				})
 			}
 			
 		}
 		catch(err){
-			res.status(500).send({
-				status:res.statusCode,
-				message:'Check internet connection!',
-				error:err
-			})
+			// res.status(500).send({
+			// 	status:res.statusCode,
+			// 	message:'Check internet connection!',
+			// 	error:err
+			// })
+			console.log(err);
 		}
 	}
 	// update coop function

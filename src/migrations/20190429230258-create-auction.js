@@ -34,6 +34,7 @@ module.exports = {
       },
       StoreId:{
         type: Sequelize.UUID,
+        unique: true
       }
     });
   },

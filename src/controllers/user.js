@@ -94,7 +94,7 @@ class Users {
   // delete user
   static async deleteUser(req,res){
     try{
-
+      
     }catch(err){
       res.status(500).send({
         status:res.statusCode,
