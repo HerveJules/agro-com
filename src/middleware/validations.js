@@ -33,7 +33,7 @@ function validatePassword(req,res,next){
 		next();
 	} else {
 		return res.status(406).send({
-		status:406,
+		status:res.statusCode,
 		message:'invalid password',
 		error:schema.validate(password,{list:true})
 		})

@@ -35,7 +35,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       CoopId:{
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        unique:true
       }
     });
   },

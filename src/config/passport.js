@@ -8,10 +8,11 @@ const jwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt; 
 
 
-passport.use( new jwtStrategy({
+passport.use( 'jwt', new jwtStrategy({
         jwtFromRequest: ExtractJwt.fromHeader('authorization'),
         secretOrKey   : secretKey
     },async (Payload, done) => {
+
 
        try{
              //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
@@ -30,7 +31,7 @@ passport.use( new jwtStrategy({
                 
             }
        }catch(error){
-        done(error,false);
+            done(error,false);
        }
     }
 ));

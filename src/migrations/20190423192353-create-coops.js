@@ -59,7 +59,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       UserId:{
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        unique: true
       }
     });
   },
