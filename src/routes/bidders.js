@@ -1,8 +1,6 @@
 import express from 'express';
 import Bidder from '../controllers/bidders';
 import passport from 'passport';
-import passportAuth from '../config/passport';
-import { multerUploads} from '../helpers/multer';
 import validators from '../middleware/validations';
 const router = express.Router();
 

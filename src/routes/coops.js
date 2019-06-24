@@ -1,8 +1,5 @@
 import express from 'express';
 import Coop from '../controllers/coops';
-import cloudinary from 'cloudinary';
-import { multerUploads} from '../helpers/multer';
-import {dataUri } from '../helpers/multer';
 import validators from '../middleware/validations';
 import passport from 'passport';
 import middlewares from '../middleware/checks';

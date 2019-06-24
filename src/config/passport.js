@@ -27,7 +27,12 @@ passport.use( 'jwt', new jwtStrategy({
             // if exist handle it
 
             else{
-                done(null,userFind);
+                done(null,{
+                    id:userFind.id,
+                    email:userFind.email,
+                    isadmin:userFind.isadmin,
+                    isverified:userFind.isverified,
+                });
                 
             }
        }catch(error){
