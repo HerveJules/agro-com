@@ -12,7 +12,9 @@
     "make:seed": "node_modules/.bin/sequelize seed:create --name",
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "migrate:refresh": "npm run migrate:reset && npm run migrate",
-    "migrate:reset": "node_modules/.bin/sequelize db:migrate:undo:all"
+    "migrate:reset": "node_modules/.bin/sequelize db:migrate:undo:all",
+    "start:heroku":"babel-node src/server.js",
+    "heroku-postbuild":"npm install"
   },
   "engines": {
     "node": "10.16.0"
