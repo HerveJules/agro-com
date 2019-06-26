@@ -3,12 +3,9 @@ import Bidder from '../controllers/bidders';
 import passport from 'passport';
 import validators from '../middleware/validations';
 const router = express.Router();
+router.use('/api/v1',passport.authenticate('jwt', { session: false }));
+router.post('/api/v1/add/bidder',Bidder.addBidder);
 
-router.use('/api/v1/add',validators.validateEmail);
-router.use('/api/v1/add',validators.validatePassword);
-
-router.post('/api/v1/add/bidders',Bidder.addBidder);
-
-router.get('/api/v1/get/bidders', Bidder.fetch);
+router.get('/api/v1/edit/bidder', Bidder.edit);
 	
 export default router;

@@ -19,39 +19,29 @@ module.exports = {
         type:Sequelize.STRING,
         allowNull:false
       },
-      compEmail: {
-        type: Sequelize.STRING,
-        allowNull:false
-      },
       compWeb: {
         type: Sequelize.STRING
       },
       RBCertificate: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       compAgrees: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       LeaderSignL: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       BankHis: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       RACertificate: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       compLogo: {
         type: Sequelize.STRING
       },
       compAuditR: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       createdAt: {
         allowNull: false,

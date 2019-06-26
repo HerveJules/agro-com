@@ -18,12 +18,10 @@ module.exports = {
       // RDB certificate
       RBCertificate: {
         type: Sequelize.STRING,
-        allowNull:false
       },
       // RRA clearance certificate
       RAClearance:{
         type: Sequelize.STRING,
-        allowNull:false
       },
       // cooperative tin number
       tin: {
@@ -34,11 +32,6 @@ module.exports = {
       //terms and agreement of cooperative
       coopAgrees: {
         type: Sequelize.STRING,
-        allowNull:false
-      },
-      coopEmail: {
-        type: Sequelize.STRING,
-        allowNull: false
       },
       //leaders signature letter
       coopSignL:{
@@ -48,7 +41,6 @@ module.exports = {
       // cooperative leader certificate
       leaderCert:{
         type: Sequelize.STRING,
-        allowNull:false
       },
       createdAt: {
         allowNull: false,

@@ -16,15 +16,15 @@ module.exports = {
         allowNull:false
       },
       quantity: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull:false
+      },
+      price: {
+        type: Sequelize.STRING
       },
       storeStation: {
         type: Sequelize.STRING,
         allowNull:false
-      },
-      MaxLifetime: {
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -36,7 +36,6 @@ module.exports = {
       },
       CoopId:{
         type: Sequelize.UUID,
-        unique:true
       }
     });
   },

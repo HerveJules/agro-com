@@ -13,14 +13,14 @@ const store = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     quantity: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull:false
     },
     storeStation: {
       type: DataTypes.STRING,
-    },
-    MaxLifetime: {
-      type: DataTypes.STRING,
-      defaultValue:null
     },
   }, {});
   Store.associate = function(models) {

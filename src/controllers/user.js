@@ -87,7 +87,8 @@ class Users {
         }
     } catch (err) {
       res.status(203).send({
-        message: err
+        status:res.statusCode,
+        message: 'Something went wrong on server'
       });
     }
   }

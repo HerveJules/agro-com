@@ -24,9 +24,6 @@ const coops = (sequelize, DataTypes) => {
     coopAgrees:{
       type: DataTypes.STRING
     },
-    coopEmail: {
-      type:DataTypes.STRING
-    },
     coopSignL:{
       type: DataTypes.STRING
     },

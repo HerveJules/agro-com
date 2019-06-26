@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     quantity: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
     bidder_tin: {
       type: DataTypes.INTEGER,
       defaultValue:null
     },
     price: {
-      type: DataTypes.STRING,
-      defaultValue:null
+      type: DataTypes.INTEGER,
+      allowNull:false
     },
     payed: {
       type: DataTypes.BOOLEAN,

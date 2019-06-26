@@ -9,9 +9,9 @@ class Coops {
 	// creating a function for add cooperative
 	static async createCoop(req,res){
 		
-		// // try and catch to find if not exist create new coop
+		// // try and catch to find if not exist and create new coop
 		try{ 
-			const {coopName,coopLocation,tin,coopEmail} = req.body;
+			const {coopName,coopLocation,tin} = req.body;
 			const UserId= req.user.id;
 			const Op = Sequelize.Op;
 		// 	// find if exist
@@ -24,7 +24,6 @@ class Coops {
 				const createcoop = Coop.create({
 					coopName,
 					coopLocation,
-					coopEmail,
 					tin,
 					UserId,
 					RBCertificate:coudinary_links[0],
@@ -49,12 +48,10 @@ class Coops {
 			
 		}
 		catch(err){
-			// res.status(500).send({
-			// 	status:res.statusCode,
-			// 	message:'Check internet connection!',
-			// 	error:err
-			// })
-			console.log(err);
+			res.status(500).send({
+				status:res.statusCode,
+				message:'Check internet connection!',
+			})
 		}
 	}
 	// update coop function
@@ -83,7 +80,6 @@ class Coops {
 			return res.status(500).send({
 				status:res.statusCode,
 				message:'Check your network connection',
-				error:err
 			})
 		}
 	}
@@ -109,7 +105,7 @@ class Coops {
 		}catch(err){
 			return res.status(500).send({
 				status:res.statusCode,
-				message:'something went wrong while deleting cooperative',
+				message:'something went wrong on server',
 			})
 		}
 	}
@@ -126,7 +122,7 @@ class Coops {
 		}catch(err){
 			res.status(500).send({
 				status:res.statusCode,
-				message:'something went wrong!'
+				message:'something went wrong on server!'
 			})
 		}
 	}

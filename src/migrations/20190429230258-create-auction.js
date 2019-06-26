@@ -8,14 +8,14 @@ module.exports = {
         primaryKey: true
       },
       quantity: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull:false
       },
       bidder_tin: {
         type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       payed: {
         type: Sequelize.BOOLEAN
@@ -33,7 +33,6 @@ module.exports = {
       },
       StoreId:{
         type: Sequelize.UUID,
-        unique: true
       }
     });
   },

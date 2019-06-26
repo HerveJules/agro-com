@@ -15,9 +15,6 @@ const bidder = (sequelize, DataTypes) => {
     tin:{
       type: DataTypes.STRING,
     },
-    compEmail: {
-      type: DataTypes.STRING,
-    },
     compWeb: {
       type: DataTypes.STRING,
       // defaultValue:null
