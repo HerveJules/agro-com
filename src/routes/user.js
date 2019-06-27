@@ -35,6 +35,8 @@ router.delete('/api/v1/user/coop/del',validators.validateEmail,User.deleteUserCo
 router.delete('/api/v1/user/bidder/del',validators.validateEmail,User.deleteUserBidder);
 // verify account to enable navigation to sensitive routes
 router.put('/api/v1/user/verify',validators.validateEmail,User.verify);
+//grant admin privilege to user acount 
+router.put('/api/v1/User/grant',User.GrantAdmin);
 // get user heading cooperative with any info regarding cooperative
 router.get('/api/v1/user/coop/getfull',validators.validateEmail,User.getUserCoopInfo);
 // get user heading bidding company with full info

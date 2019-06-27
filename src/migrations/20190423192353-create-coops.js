@@ -36,7 +36,6 @@ module.exports = {
       //leaders signature letter
       coopSignL:{
         type: Sequelize.STRING,
-        allowNull:false
       },
       // cooperative leader certificate
       leaderCert:{

@@ -205,7 +205,7 @@ class Users {
           })
         });
       }else{
-        return res.status(404).send({
+        return res.status(400).send({
           status:res.statusCode,
           message:'User not found in database!'
         })
@@ -217,6 +217,36 @@ class Users {
       })
     }
   }
+
+  // grant administrator privilege
+
+  static async GrantAdmin(req,res){
+    try{
+      // find user by email
+      const findOne = await User.findOne({where:{email:req.body.email}});
+      if (findOne) {
+        await findOne.update({isadmin:true,where:{email:req.body.email}})
+        .then(user => {
+          return res.status(200).send({
+            status:res.statusCode,
+            message:'Administrator privilege granted successfully!'
+          })
+        });
+      }else{
+        return res.status(400).send({
+          status:res.statusCode,
+          message:'User not found in database!'
+        })
+      }
+    }catch(err){
+      return res.status(500).send({
+        status:res.statusCode,
+        message:'Something went wrong!'
+      })
+    }
+  }
+
+
   // get user heading cooperative full information
   static async getUserCoopInfo(req,res){
     try{
@@ -244,7 +274,7 @@ class Users {
           findOne
         })
       }else{
-        return res.status(404).send({
+        return res.status(400).send({
           status:res.statusCode,
           message:'user has no associated bidding company'
         })
