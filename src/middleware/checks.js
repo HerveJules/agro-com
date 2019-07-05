@@ -1,7 +1,8 @@
 
 class Identity{
 	static  isAdmin(req,res,next){
-		if (req.user.isadmin == true) {
+		// console.log(req.user.userFind.id);
+		if (req.user.userFind.isadmin == true) {
 			next();
 		}else{
 			return res.status(403).send({
@@ -11,7 +12,7 @@ class Identity{
 		}
 	}
 	static async isVerified(req,res,next){
-		if (req.user.isverified ){
+		if (req.user.userFind.isverified ){
 			next();
 		}else{
 			return res.status(403).send({

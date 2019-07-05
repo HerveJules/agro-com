@@ -5,7 +5,15 @@ import {check} from 'express-validator/check';
 import { multerUploads} from '../helpers/multer';
 import validators from '../middleware/validations';
 import middlewares from '../middleware/checks';
+import cookieParser from 'cookie-parser';
+
 const router = express.Router();
+
+router.use(cookieParser());
+router.use('/',function(req, res, next) {  
+    req.headers['Authorization'] = req.cookies["Authorization"]
+    next();
+})
 
 router.use('/api/v1/auth',validators.validateEmail);
 router.use('/api/v1/auth',validators.validatePassword);
@@ -23,7 +31,9 @@ router.post('/api/v1/auth/signup',[
 ],User.createUser);
 
 // authentication route
-
+router.get('/beneficiary',(req,res)=>{
+	res.render('all-coops');
+})
 router.post('/api/v1/auth/signin',User.auth);
 // delete user 
 router.delete('/api/v1/user/del',validators.validateEmail,User.deleteUser);
@@ -40,6 +50,26 @@ router.put('/api/v1/User/grant',User.GrantAdmin);
 // get user heading cooperative with any info regarding cooperative
 router.get('/api/v1/user/coop/getfull',validators.validateEmail,User.getUserCoopInfo);
 // get user heading bidding company with full info
-router.get('/api/v1/user/bidder/getfull',validators.validateEmail,User.getUserBidderInfo)
+router.get('/api/v1/user/bidder/getfull',validators.validateEmail,User.getUserBidderInfo);
+// get all users
+router.get('/api/v1/user/all',User.getAllUsers);
+// get add page
+router.get('/api/v1/user/add',(req,res)=>{
+	res.render('add-user',{
+		user:req.user.userFind
+	});
+});
+// route to get edit page
+router.get('/api/v1/user/edit',(req,res)=>{
+	res.render('edit-user',{
+		user:req.user.userFind
+	})
+});
+// route to get delete page
+router.get('/api/v1/user/del',(req,res)=>{
+	res.render('del-user',{
+		user:req.user.userFind
+	})
+})
 
 export default router;

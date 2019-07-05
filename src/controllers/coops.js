@@ -8,9 +8,11 @@ class Coops {
 
 	// creating a function for add cooperative
 	static async createCoop(req,res){
-		
+		req.headers[req.cookies];
+			console.log(req.headers);
 		// // try and catch to find if not exist and create new coop
 		try{ 
+			
 			const {coopName,coopLocation,tin} = req.body;
 			const UserId= req.user.id;
 			const Op = Sequelize.Op;
@@ -48,10 +50,11 @@ class Coops {
 			
 		}
 		catch(err){
-			res.status(500).send({
-				status:res.statusCode,
-				message:'Check internet connection!',
-			})
+			// res.status(500).send({
+			// 	status:res.statusCode,
+			// 	message:'Check internet connection!',
+			// })
+			console.log(err)
 		}
 	}
 	// update coop function

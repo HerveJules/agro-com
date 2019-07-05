@@ -13,8 +13,8 @@
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "migrate:refresh": "npm run migrate:reset && npm run migrate",
     "migrate:reset": "node_modules/.bin/sequelize db:migrate:undo:all",
-    "start:heroku":" --exec babel-node src/server.js",
-    "heroku-postbuild":"npm install"
+    "start:heroku": " --exec babel-node src/server.js",
+    "heroku-postbuild": "npm install"
   },
   "engines": {
     "node": "10.16.0"
@@ -43,11 +43,13 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.14.0",
+    "cookie-parser": "^1.4.4",
     "datauri": "^2.0.0",
     "dotenv": "^7.0.0",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.4",
+    "express-handlebars": "^3.1.0",
     "express-validator": "^5.3.1",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",

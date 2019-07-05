@@ -65,8 +65,8 @@ class Users {
               id:userfindOne.id,
             }
             const token = jwt.sign(user,secretKey);
-            return res.status(201).send({
-              status:res.statusCode,
+            await res.cookie('Authorization',token);
+            return res.render('index',{
               message:'You have successfully logged in',
               userfindOne,
               token
@@ -88,7 +88,7 @@ class Users {
     } catch (err) {
       res.status(203).send({
         status:res.statusCode,
-        message: 'Something went wrong on server'
+        message: err
       });
     }
   }
@@ -285,6 +285,35 @@ class Users {
         error:'Something went wrong!'
       })
     }
+  }
+  // get all users
+  static async getAllUsers(req,res){
+    try{
+      // find all
+      const findAll = await User.findAll({
+        attributes:['firstname','lastname','email','tel','jobtitle','role','image']
+      });
+      console.log(findAll)
+      if (findAll) {
+        res.render('all-users',{
+          findAll,
+          user:req.user.userFind
+        });
+      } else {
+        res.render('all-users',{
+          message:'There is no user registered yet!',
+          user:req.user.userFind
+        })
+      }
+    }catch(err){
+      console.log(err)
+      // res.send({
+      //   message:err
+      // })
+    }
+    // res.render('all-users',{
+    //   user:req.user.userFind
+    // });
   }
 
 }

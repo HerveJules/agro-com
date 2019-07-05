@@ -9,7 +9,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 
 
 passport.use( 'jwt', new jwtStrategy({
-        jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+        jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
         secretOrKey   : secretKey
     },async (Payload, done) => {
 
@@ -28,10 +28,7 @@ passport.use( 'jwt', new jwtStrategy({
 
             else{
                 done(null,{
-                    id:userFind.id,
-                    email:userFind.email,
-                    isadmin:userFind.isadmin,
-                    isverified:userFind.isverified,
+                    userFind
                 });
                 
             }

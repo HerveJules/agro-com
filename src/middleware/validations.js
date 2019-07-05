@@ -5,7 +5,6 @@ import passwdValidator from 'password-validator';
 
 function validateEmail(req,res,next){
 	const {email} = req.body;
-		// console.log(emailValidator.validate(email));
 	if (emailValidator.validate(email)){
 		next();
 	}else{

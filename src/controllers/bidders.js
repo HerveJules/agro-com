@@ -8,6 +8,8 @@ class bidder{
 	// function to add origanisation related information
 	static async addBidder(req,res){ 
 		// // try to find if not exist create new coop
+		req.headers[req.cookies];
+			console.log(req.headers);
 		try{
 			const{compName, tin}=req.body;
 			const coudinary_links = await cloud(req.files);
@@ -30,10 +32,11 @@ class bidder{
 			}
 		}catch(err){
 			console.log(err);
-			return res.status(500).send({
-				status:res.statusCode,
-				message:'Something went wrong on server!'
-			})
+			// return res.status(500).send({
+			// 	status:res.statusCode,
+			// 	message:'Something went wrong on server!'
+			// })
+			console.log(err);
 		}
 	}
 	
