@@ -41,10 +41,23 @@ app.use(store);
 
 // user page
 
-app.get('/', (req, res,next) => {
+app.get('/login', (req, res,next) => {
 
     res.sendFile(path.join(__dirname, '../src/views', 'login.html'));    
 });
+app.get('/register', (req, res,next) => {
+
+    res.sendFile(path.join(__dirname, '../src/views', 'register.html'));    
+});
+app.get('/500', (req, res,next) => {
+
+    res.sendFile(path.join(__dirname, '../src/views', '500.html'));    
+});
+// clear cookies
+app.get('/logout',(req,res)=>{
+	res.cookie('Authorization', {expires: Date.now()});
+	res.redirect('/login');
+})
 // app.get('/api/', (req, res,next) => {
 // 	console.log(req.cookies["Authorization"]);
 
@@ -61,15 +74,15 @@ app.get('/', (req, res,next) => {
 //     } 
 // });
 
-app.get('/api/d',passport.authenticate('jwt',{session:false}), (req, res) => {
-	// console.log(req.user);
-	res.render('index',{
-		user:req.user.userFind
-	})
-});
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/views', 'register.html'));    
-});
+// app.get('/api/d',passport.authenticate('jwt',{session:false}), (req, res) => {
+// 	// console.log(req.user);
+// 	res.render('index',{
+// 		user:req.user.userFind
+// 	})
+// });
+// app.get('/register', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../src/views', 'register.html'));    
+// });
 // // coops page
 // app.get('/coops', (req, res) => {
 //     res.status(200).send({message : 'welcome to coops'});   

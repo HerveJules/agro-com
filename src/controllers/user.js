@@ -15,40 +15,26 @@ class Users {
 
   static async createUser(req, res) {
     // throwing error if express-validator found invalid value in route
-    
+    // // console.log(validationResult);
+    console.log(req.body.email);
     
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(422).send({ errors: errors.array() });
-      }
-
       const userFind = await User.findOne({ where: { email:req.body.email } });
       if (userFind) {
-        return res.status(400).send({
-          status: 400,
-          errorMessage: "The User with that email exists"
-        });
+        return res.redirect('/register');
       }
-      const links = await cloud(req.files);
+      // const links = await cloud(req.files);
       const encryptedPassword = await generateHash(req.body.password);
       const userSave = await User.create({
         ...req.body,
         password:encryptedPassword,
-        image: links[0]
       });
       if (userSave) {
-        return res.status(201).send({
-          status: res.statusCode,
-          message: "User has been created",
-          userSave
-        });
+        return res.redirect('/login');
       }
     } catch (err) {
-      console.log(err);
-      res.status(500).send({
-        
-      });
+      
+      res.redirect('/500');
     }
   }
   // function that do login operationscompareHashedPassword
@@ -60,36 +46,35 @@ class Users {
       const userfindOne = await User.findOne({where:{email}});
         if (userfindOne) {
 
-          if (compareHashedPassword(password,userfindOne.password)) {
+          if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Eax') {
             const user = {
               id:userfindOne.id,
             }
             const token = jwt.sign(user,secretKey);
             await res.cookie('Authorization',token);
-            return res.render('index',{
-              message:'You have successfully logged in',
-              userfindOne,
-              token
-            })
-          } else {
-            return res.status(401).send({
-              status:res.statusCode,
-              message:'incorrect password'
-            })
+            return res.redirect('/api/v1/user/index');
+          } else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Coop'){
+            // redirect to coop dashboard
+            return res.send({
+              message:'cooperative board'
+            });
+          }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Coop'){
+            // redirect to bidder
+            return res.send({
+              message:'cooperative board'
+            });
+          }else{
+            // incorrect password
+            return res.redirect('/login');
           }
           
         }else{
           // if no user found by email report incorrect email
-          return res.status(400).send({
-            status:res.statusCode,
-            message:'User does not exists'
-          })
+          return res.redirect('/register');
         }
     } catch (err) {
-      res.status(203).send({
-        status:res.statusCode,
-        message: err
-      });
+      // internal errors
+      res.redirect('/500');
     }
   }
   // delete user
@@ -99,36 +84,44 @@ class Users {
         {model:Bidder}]});
       
       if (findOne.Coop !=null | findOne.Bidder != null) {
-        return res.status(403).send({
+        return res.render('del-user',{
           status:res.statusCode,
           message:'Not allowed to delete user heading third party members'
         })
       }
       const destroy = await findOne.destroy();
       if (destroy) {
-        return res.status(200).send({
-          status:res.statusCode,
+        return res.render('del-user',{
           message:'User has been deleted successfully!'
         })
       }
     }catch(err){
-      res.status(500).send({
-        status:res.statusCode,
-        error:'Something went wrong!'
-      })
+      return res.redirect('/500');
     }
   }
   //update user
   static async updateUser(req,res){
     try{
       // condition
-      const update = await User.update({...req.body},{where:{id:req.user.id}});
-      if (update) {
-        return res.status(200).send({
-          status:res.statusCode,
-          message:'user has been updated successfully!'
-        })
+      if (!req.files) {
+        console.log(...req.body)
+        const update = await User.update({...req.body},{where:req.params});
+        if (update) {
+          return res.render('all-users',{
+            findOne:update,
+          })
+        }
+      } else {
+        console.log(req.files)
+        const coudinary_links = await cloud(req.files);
+        const update = await User.update({...req.body,image:coudinary_links[0]},{where:req.params});
+        if (update) {
+          return res.render('all-users',{
+            findOne:update,
+          })
+        } else {}
       }
+      
     }catch(err){
       return res.status(500).send({
         status:res.statusCode,
@@ -291,9 +284,8 @@ class Users {
     try{
       // find all
       const findAll = await User.findAll({
-        attributes:['firstname','lastname','email','tel','jobtitle','role','image']
+        attributes:['id','firstname','lastname','email','tel','jobtitle','role','image']
       });
-      console.log(findAll)
       if (findAll) {
         res.render('all-users',{
           findAll,
@@ -306,14 +298,57 @@ class Users {
         })
       }
     }catch(err){
-      console.log(err)
-      // res.send({
-      //   message:err
-      // })
+      return res.redirect('/500');
     }
-    // res.render('all-users',{
-    //   user:req.user.userFind
-    // });
+  }
+  // select info to edit
+  static async getInfoEdit(req,res){
+    try{
+      const findOne = await User.findOne({where:req.params});
+      if (findOne) {
+        return res.render('edit-user',{
+          findOne:findOne,
+          user:req.user.userFind
+        })
+      } else {
+        return 0;
+      }
+    }catch(err){
+      console.log(err);
+      return res.redirect('/500');
+    }
+  }
+  // select info to edit by email
+  static async getInfoEditByEmail(req,res){
+    try{
+      const findOne = await User.findOne({where:{...req.body}});
+      if (findOne) {
+        return res.render('edit-user',{
+          findOne,
+          user:req.user.userFind
+        })
+      } else {
+        return res.render('edit-user',{
+          message:'There is no user with this email'
+        })
+      }
+    }catch(err){
+      return res.redirect('/500');
+    }
+  }
+  // select info to delete by email
+  static async getInfoDelByEmail(req,res){
+    try{
+      const findOne = await User.findOne({where:{...req.body}});
+      if (findOne) {
+        return res.render('del-user',{
+          findOne,
+          user:req.user.userFind
+        })
+      } 
+    }catch(err){
+      return res.redirect('/500');
+    }
   }
 
 }

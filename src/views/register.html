@@ -74,36 +74,35 @@
 			<div class="content-error">
 				<div class="hpanel">
                     <div class="panel-body">
-                        <form action="#" id="loginForm">
+                        <form action="/api/v1/auth/signup" method="post" id="loginForm">
                             <div class="row">
-                                <div class="form-group col-lg-6">
-                                    <label>Firstname</label>
-                                    <input class="form-control">
+                                <div class="form-group col-lg-12">
+                                    <input type="text" required="" name="firstname" class="form-control" placeholder="firstname">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Lastname</label>
-                                    <input class="form-control">
+                                <div class="form-group col-lg-12">
+                                    <input type="text" required="" name="lastname" class="form-control" placeholder="lastname">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control">
+                                <div class="form-group col-lg-12">
+                                    <input type="password" required="" name="password" class="form-control" placeholder="password">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Repeat Password</label>
-                                    <input type="password" class="form-control">
+                                <div class="form-group col-lg-12">
+                                    <input type="password" class="form-control" placeholder="re-type password">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Email Address</label>
-                                    <input class="form-control">
+                                <div class="form-group col-lg-12">
+                                    <input class="form-control" type="email" name="email" required="" placeholder="email">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Repeat Email Address</label>
-                                    <input class="form-control">
+                                <div class="form-group col-lg-12 i-checks pull-left">
+                                    <label>
+                                    <input type="radio" required="" value="Eax" name="role"> <i></i> Eax </label>
+                                    <label>
+                                    <input type="radio" value="Coop" name="role"> <i></i> Cooperative </label>
+                                    <label>
+                                    <input type="radio" value="Bidder" name="role"> <i></i> Third party </label>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success loginbtn">Register</button>
-                                <button class="btn btn-default">Cancel</button>
+                                <button class="btn btn-success btn-block loginbtn">Register</button>
+                                <a class="btn btn-default btn-block" href="/login">Cancel</a>
                             </div>
                         </form>
                     </div>

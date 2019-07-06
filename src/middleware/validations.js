@@ -5,13 +5,14 @@ import passwdValidator from 'password-validator';
 
 function validateEmail(req,res,next){
 	const {email} = req.body;
+	console.log(req.body);
 	if (emailValidator.validate(email)){
 		next();
 	}else{
 
 		res.status(406).send({
 		status:406,
-		message: 'invalid email'
+		message: 'invalid emails'
 		})
 		// console.log('invalid email');
 	}

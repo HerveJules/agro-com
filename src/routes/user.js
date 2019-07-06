@@ -15,19 +15,18 @@ router.use('/',function(req, res, next) {
     next();
 })
 
-router.use('/api/v1/auth',validators.validateEmail);
-router.use('/api/v1/auth',validators.validatePassword);
+// router.use('/api/v1/auth',validators.validateEmail);
+// router.use('/api/v1/auth',validators.validatePassword);
 router.use('/api/v1/user',passport.authenticate('jwt',{session:false}),middlewares.isAdmin,middlewares.isVerified)
 // validated route with ID and Phone validation 
 
 router.post('/api/v1/auth/signup',[
-  check('ID').isNumeric()
-  .withMessage('ID must be numeric')
-  .isLength({ min : 16, max : 16 })
-  .withMessage('ID should not be less than 16 digits'),
-  check('tel').isMobilePhone()
-  .isLength({min:10})
-  .withMessage('phone number should not be less than 10 digits'),
+  check('password')
+  .withMessage('password should be AlphaNumeric')
+  .isLength({ min : 6 })
+  .withMessage('password not less than 6 characters'),
+  check('email').isEmail()
+  .withMessage('enter a valid email'),
 ],User.createUser);
 
 // authentication route
@@ -36,9 +35,9 @@ router.get('/beneficiary',(req,res)=>{
 })
 router.post('/api/v1/auth/signin',User.auth);
 // delete user 
-router.delete('/api/v1/user/del',validators.validateEmail,User.deleteUser);
+router.delete('/api/v1/user/erase',User.deleteUser);
 // update user
-router.put('/api/v1/update/user',passport.authenticate('jwt',{session:false}),User.updateUser);
+router.put('/api/v1/update/user/:id',passport.authenticate('jwt',{session:false}),User.updateUser);
 // delete user with all related info of the cooperative
 router.delete('/api/v1/user/coop/del',validators.validateEmail,User.deleteUserCoop);
 // delete user with all related info of the bidding company
@@ -60,16 +59,28 @@ router.get('/api/v1/user/add',(req,res)=>{
 	});
 });
 // route to get edit page
-router.get('/api/v1/user/edit',(req,res)=>{
-	res.render('edit-user',{
-		user:req.user.userFind
-	})
-});
+router.get('/api/v1/user/edit/:id',User.getInfoEdit);
 // route to get delete page
 router.get('/api/v1/user/del',(req,res)=>{
 	res.render('del-user',{
 		user:req.user.userFind
 	})
 })
+// route to get index
+router.get('/api/v1/user/index',(req,res)=>{
+	res.render('index',{
+		user: req.user.userFind
+	})
+})
+// route to get edit page without content
+router.get('/api/v1/user/edit',(req,res)=>{
+	res.render('edit-user',{
+		user:req.user.userFind
+	})
+})
+// route to get info for edit with email
+router.post('/api/v1/user/edit',User.getInfoEditByEmail);
+// get user to delete
+router.post('/api/v1/user/remove',User.getInfoDelByEmail);
 
 export default router;

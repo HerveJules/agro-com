@@ -34,21 +34,21 @@
             <div class="container-fluid">
                 <div class="row">
                 {{#each findAll}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="hpanel hblue contact-panel contact-panel-cs responsive-mg-b-30">
                         
                             <div class="panel-body custom-panel-jw">
                                 
-                                <img src="{{image}}" alt="portraitphoto">
-                                <h3>{{findAll.firstname}} {{findAll.lastname}}</h3>
-                                <p class="all-pro-ad">{{email}}</p>
-                                <h3>{{adress}}</h3>
-                                <h3>{{tel}}</h3>
-                                <h3>{{jobtitle}}</h3>
-                                <h3>{{role}}</h3>
-                            </div></br>
-                        
+                                <img id="user_profile" src="{{image}}" alt="Photo">
+                                <p><span class="all-pro-ad">Names: </span>{{firstname}} {{lastname}}</p>
+                                <p><span class="all-pro-ad">email: </span>{{email}}</p>
+                                <p><span class="all-pro-ad">phone: </span>{{tel}}</p>
+                                <p><span class="all-pro-ad">title: </span>{{jobtitle}}</p>
+                                <p><span class="all-pro-ad">User-tyep: </span>{{role}}</p>
+                            </div>
+                            <form action="/api/v1/user/edit/{{id}}" method="get"><button class="btn btn-primary">edit</button></form>
                         </div>
+                        &nbsp
                     </div>
                  {{/each}}   
                 </div>

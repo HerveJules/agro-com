@@ -53,11 +53,10 @@ const User = (sequelize, DataTypes) => {
     },
     jobtitle: {
       type: DataTypes.STRING,
-      allowNull:false
     },
     image:{
       type: DataTypes.STRING,
-      defaultValue:null
+      defaultValue:'http://chittagongit.com/download/21972'
     }
   }, {});
   User.associate = function(models) {
