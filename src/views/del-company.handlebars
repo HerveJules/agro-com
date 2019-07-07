@@ -6,9 +6,17 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder=" Company name..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
+                                            <form action="/api/v1/bidders/infoDel" method="post" class="">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <input type="number" required="" name="coopName" placeholder="Enter TIN..." class="search-int form-control">
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <button class="btn btn-default">find</button>
+                                                        
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -30,49 +38,56 @@
         <!-- Single pro tab review Start-->
         <div class="single-pro-review-area mt-t-30 mg-b-15">
             <div class="container-fluid">
+                <span><b>{{message}}</b></span>
+                <p></p>
                 <div class="row">
+                {{#each findOne}}
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="profile-info-inner">
                             <div class="profile-img">
-                                <img src="" alt="" />
+                                <img src="{{findLeader.image}}" alt="" />
                             </div>
                             <div class="profile-details-hr">
+
                                 <div class="row">
+
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr">
-                                            <p><b>Company Name</b><br /> brand</p>
+                                            <p><b>Company Name</b><br /> {{compName}}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Leader</b><br /> name.</p>
+                                            <p><b>Leader</b><br /> {{findLeader.firstname}} {{findLeader.lastname}}.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr">
-                                            <p><b>Location</b><br /> ...</p>
+                                            <p><b>Location</b><br /> {{compLocation}}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Tin</b><br /> 123456</p>
+                                            <p><b>Tin</b><br /> {{tin}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="address-hr">
-                                            <button class="btn btn-danger widget-btn-4 btn-sm">Delete Company</button>
+                                    <form action="/api/v1/bidder/remove/{{tin}}" method="post">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="address-hr">
+                                                <button class="btn btn-danger widget-btn-4 btn-sm">Delete Company</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {{/each}}
                 </div>
             </div>
         </div>

@@ -35,15 +35,15 @@ router.get('/beneficiary',(req,res)=>{
 })
 router.post('/api/v1/auth/signin',User.auth);
 // delete user 
-router.delete('/api/v1/user/erase',User.deleteUser);
+router.post('/api/v1/user/erase',User.deleteUser);
 // update user
-router.put('/api/v1/update/user/:id',passport.authenticate('jwt',{session:false}),User.updateUser);
+router.post('/api/v1/update/user/:id',passport.authenticate('jwt',{session:false}),User.updateUser);
 // delete user with all related info of the cooperative
-router.delete('/api/v1/user/coop/del',validators.validateEmail,User.deleteUserCoop);
+router.post('/api/v1/user/coop/del/:coopName',User.deleteUserCoop);
 // delete user with all related info of the bidding company
 router.delete('/api/v1/user/bidder/del',validators.validateEmail,User.deleteUserBidder);
 // verify account to enable navigation to sensitive routes
-router.put('/api/v1/user/verify',validators.validateEmail,User.verify);
+router.post('/api/v1/user/verify/:id',User.verify); 
 //grant admin privilege to user acount 
 router.put('/api/v1/User/grant',User.GrantAdmin);
 // get user heading cooperative with any info regarding cooperative

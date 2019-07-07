@@ -43,19 +43,23 @@
                                         <th>Leader Certificate</th>
                                         <th>Setting</th>
                                     </tr>
+                                    {{#each result}}
+                                    <form action="/api/v1/user/verify/{{UserId}}" method="post">
                                     <tr>
-                                        <td>cooperative</td>
-                                        <td>kigali-rwanda</td>
-                                        <td>121345748</td>
-                                        <td><a href="https://igihe.com">www.agro-com.com</a></td>
-                                        <td><a href="https://igihe.com">www.agro-com.com</a></td>
-                                        <td><a href="https://igihe.com">www.agro-com.com</a></td>
-                                        <td><a href="https://igihe.com">www.agro-com.com</a></td>
-                                        <td><a href="https://igihe.com">www.agro-com.com</a></td>
+                                        <td>{{coopName}}</td>
+                                        <td>{{coopLocation}}</td>
+                                        <td>{{tin}}</td>
+                                        <td><a href="{{RBCertificate}}">RDB certificate</a></td>
+                                        <td><a href="{{RACertificate}}">RRA clearance Certificate</a></td>
+                                        <td><a href="{{coopAgrees}}">Agreement</a></td>
+                                        <td><a href="{{coopSignL}}">Signed letter</a></td>
+                                        <td><a href="{{leaderCert}}">Leader certificate</a></td>
                                         <td>
                                             <button data-toggle="tooltip" title="verify" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
+                                    </form>
+                                    {{/each}}
                                     
                                 </table>
                             </div>

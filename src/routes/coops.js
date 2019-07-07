@@ -3,7 +3,14 @@ import Coop from '../controllers/coops';
 import validators from '../middleware/validations';
 import passport from 'passport';
 import middlewares from '../middleware/checks';
+import cookieParser from 'cookie-parser';
 const router = express.Router();
+
+router.use(cookieParser());
+router.use('/',function(req, res, next) {  
+    req.headers['Authorization'] = req.cookies["Authorization"]
+    next();
+})
 
 router.use('/api/v1/coop',passport.authenticate('jwt',{session:false}));
 
@@ -13,8 +20,17 @@ router.post('/api/v1/coop',Coop.createCoop);
 // update cooperative
 router.put('/api/v1/coop/ops/update',Coop.updateCoop);
 // destroy cooperative
-router.delete('/api/v1/coop/ops/del',Coop.deleteCoop);
+router.post('/api/v1/coop/ops/del/:tin/:coopName',Coop.deleteCoop);
 // get cooperatives
 router.get('/api/v1/coop/ops/fetch',Coop.getCoops);
+// route to get cooperative delete page
+router.get('/api/v1/coop/ops/remove',(req,res)=>{
+	res.render('del-coop',{
+		user:req.user.userFind
+	});
+})
+// route to get info of coop to delete
+router.post('/api/v1/coop/ops/info',Coop.getDelInfo);
+
 	
 export default router;

@@ -30,6 +30,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap drp-lst">
                             <h4>Store</h4>
+                            <span>{{message}}</span>
                             <div class="add-product">
                                 <a href="add-course.html">Add Store</a>
                             </div>
@@ -40,19 +41,26 @@
                                         <th>Quality</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
+                                        <th>Station</th>
+                                        <th>Stored on</th>
                                         <th>Setting</th>
                                     </tr>
+                                    {{#each findAll}}
                                     <tr>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>...</td>
+                                        <td>{{productName}}</td>
+                                        <td>{{quality}}</td>
+                                        <td>{{quantity}}</td>
+                                        <td>{{price}}</td>
+                                        <td>{{storeStation}}</td>
+                                        <td>{{createdAt}}</td>
+                                        <form action="#" method="post">
                                         <td>
-                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                            <button data-toggle="tooltip" href="/api/v1/store/modPage" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                             <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                         </td>
+                                        </form>
                                     </tr>
-                                    
+                                    {{/each}}
                                 </table>
                             </div>
                             <div class="custom-pagination">

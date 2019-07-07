@@ -8,6 +8,7 @@ import jwtpassport from "../config/passport";
 import { cloudinaryConfig, uploader } from "../config/cloudinaryConfig";
 import cloud from "../helpers/clouds";
 import {validationResult} from 'express-validator/check';
+import Sequelize from 'sequelize';
 
 const secretKey = secret.secretKey;
 const { User,Coop, Bidder, Store, Auction } = db;
@@ -58,10 +59,10 @@ class Users {
             return res.send({
               message:'cooperative board'
             });
-          }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Coop'){
+          }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Bidder'){
             // redirect to bidder
             return res.send({
-              message:'cooperative board'
+              message:'Bidder board'
             });
           }else{
             // incorrect password
@@ -79,23 +80,28 @@ class Users {
   }
   // delete user
   static async deleteUser(req,res){
+    console.log(req.body.email);
     try{
+      
       const findOne = await User.findOne({where:{email:req.body.email},include:[{model:Coop},
         {model:Bidder}]});
       
       if (findOne.Coop !=null | findOne.Bidder != null) {
         return res.render('del-user',{
           status:res.statusCode,
-          message:'Not allowed to delete user heading third party members'
+          message:'Not allowed to delete user heading third party members',
+          user:req.user.userFind
         })
       }
       const destroy = await findOne.destroy();
       if (destroy) {
         return res.render('del-user',{
-          message:'User has been deleted successfully!'
+          message:'User has been deleted successfully!',
+          user:req.user.userFind
         })
       }
     }catch(err){
+      console.log(err);
       return res.redirect('/500');
     }
   }
@@ -104,25 +110,22 @@ class Users {
     try{
       // condition
       if (!req.files) {
-        console.log(...req.body)
         const update = await User.update({...req.body},{where:req.params});
         if (update) {
-          return res.render('all-users',{
-            findOne:update,
-          })
+          return res.redirect('/api/v1/user/all')
         }
       } else {
-        console.log(req.files)
         const coudinary_links = await cloud(req.files);
         const update = await User.update({...req.body,image:coudinary_links[0]},{where:req.params});
         if (update) {
-          return res.render('all-users',{
-            findOne:update,
-          })
-        } else {}
+          return res.redirect('/api/v1/user/all')
+        } else {
+
+        }
       }
       
     }catch(err){
+      console.log(err)
       return res.status(500).send({
         status:res.statusCode,
         error:'Something went wrong!'
@@ -133,23 +136,27 @@ class Users {
   static async deleteUserCoop(req,res){
     try{
       // find user heading cooperative by email
-      const findOne = await User.findOne({where:{email:req.body.email},include:[Coop]});
-      if (findOne.Coop) {
-        await findOne.Coop.destroy().then(()=>{
-          findOne.destroy().then(()=>{
-            return res.status(200).send({
-              status:res.statusCode,
-              message:'user has been deleted successfully!'
-            })
+      const findOne = await Coop.findOne({where:req.params}).then( result => {
+        return Store.destroy({where:{CoopId:result.id}}).then(()=>{
+          return res.render('del-store',{
+            user:req.user.userFind,
+            message:'Store has been destroyed successfully!'
+          })
+        }).catch((err)=>{
+          return res.render('del-store',{
+            user:req.user.userFind,
+            message:`Error occured ${err}`
           })
         })
-      }else{
-        return res.status(400).send({
-          status:res.statusCode,
-          message:'user have no associated cooperative'
+      }).catch((err)=>{
+        return res.render('',{
+          user:req.user.userFind,
+          message:`cooperative not exist!`
         })
-      }
+      });
+
     }catch(err){
+      console.log(err);
       return res.status(500).send({
         status:res.statusCode,
         error:'Something went wrong!'
@@ -188,9 +195,11 @@ class Users {
   static async verify(req,res){
     try{
       // find user by email
-      const findOne = await User.findOne({where:{email:req.body.email}});
+      console.log(req.params);
+      const findOne = await User.findOne({where:req.params});
+      console.log(findOne);
       if (findOne) {
-        await findOne.update({isverified:true,where:{email:req.body.email}})
+        await findOne.update({isverified:true})
         .then(user => {
           return res.status(200).send({
             status:res.statusCode,
@@ -339,13 +348,17 @@ class Users {
   // select info to delete by email
   static async getInfoDelByEmail(req,res){
     try{
-      const findOne = await User.findOne({where:{...req.body}});
+      const Op = Sequelize.Op;
+      const findOne = await User.findOne({where:{[Op.and]:[{...req.body},{role:'Eax'}]}});
       if (findOne) {
         return res.render('del-user',{
           findOne,
           user:req.user.userFind
         })
       } 
+      return res.render('del-user',{
+        message:'There is no Eax user with this email'
+      });
     }catch(err){
       return res.redirect('/500');
     }

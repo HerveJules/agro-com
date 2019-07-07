@@ -69,6 +69,73 @@ class bidder{
 			})
 		}
 	}
+	// get all bidder companies
+	static async getAll(req,res){
+		try{
+			const findAll = await Bidder.findAll({
+				attributes:['compName','compLocation',
+				'tin','BankHis','RBCertificate','RACertificate',
+				'compAgrees','LeaderSignL','compAuditR']
+			}).then((result)=>{
+				return res.rend('all-companies',{
+					findAll,
+					user:req.user.userFind
+				})
+			}).catch( err => res.render('all-companies',{
+				user:req.user.userFind,
+				message:'No bidder company registered now!'
+			}))
+		}catch(err){
+			return res.redirect('/500');
+		}
+	}
+	// destroy company with tin number
+	static async DestroyBidder(req,res){
+		try{
+
+			await Bidder.destroy({where:req.params})
+				.then(result =>{
+					return res.render('del-company',{
+						user:req.user.userFind,
+						message:'Bidding Company has been destroyed!'
+					})
+				}).catch(err=> res.render('del-company',{
+					user:req.user.userFind,
+					message:'This company not registered yet!'
+				}))
+		}catch(err){
+			return res.redirect('/500');
+		}
+	}
+	// get info by tin
+	static async getInfoDel(req,res){
+		try{
+			const {tin} = req.body;
+			 await Bidder.findOne({where:{tin}})
+			 	.then(result=>{
+			 		const findLeader = User.findOne({where:{id:result.UserId}});
+			 		if (findLeader) {
+			 			return res.render('del-company',{
+				 			user:req.user.userFind,
+				 			findOne,
+				 			findLeader,
+				 			message:'Company found!'
+				 		})
+			 		} else {
+			 			return res.render('del-company',{
+			 				user:req.user.userFind,
+			 				message:'No representative found!'
+			 			})
+			 		}
+			 		
+			 	}).catch(err=>res.render('del-company',{
+			 		user:req.user.userFind,
+			 		message:'Company not registered yet!'
+			 	}))
+		}catch(err){
+			return res.redirect('/500');
+		}
+	}
 
 }
 

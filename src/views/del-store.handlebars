@@ -6,7 +6,18 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            
+                                           <form action="/api/v1/store/remove" method="post" class="">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <input type="text" required="" name="coopName" placeholder="Enter cooperative..." class="search-int form-control">
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <button class="btn btn-default">find</button>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </form> 
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -27,48 +38,65 @@
         <div class="single-pro-review-area mt-t-30 mg-b-15">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="profile-info-inner">
-                            <div class="profile-img">
-                                <img src="" alt="" />
+                
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            
+                            <div class="address-hr">
+                                <span><b>{{message}}</b></span>
+                                <p><font size="6">{{findOne.coopName}}</font></p>
                             </div>
-                            <div class="profile-details-hr">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr">
-                                            <p><b>Cooperative Name</b><br /> ...</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Product</b><br /> ...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr">
-                                            <p><b>Quality</b><br /> ...</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Quantity</b><br /> 250</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="address-hr">
-                                            <button class="btn btn-danger widget-btn-4 btn-sm">Delete user</button>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
+                    {{#each findOne.Stores}}
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     
+                        <div class="profile-info-inner">
+                            
+                            
+                            <div  class="profile-details-hr">
+                                <div class="row">
+                                    
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
+                                            <p><b>Product</b><br /> {{productName}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                                        <div class="address-hr">
+                                            <p><b>Quality</b><br /> {{quality}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
+                                            <p><b>Price</b><br /> {{price}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
+                                            <p><b>Quantity</b><br /> {{quantity}}</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <p></p>
+                    </div>
+                    {{/each}}
+
                 </div>
+                <p></p>
+                <div class="row">
+                                    
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                        <form action="/api/v1/user/coop/del/{{findOne.coopName}}" method="post">
+                            <button class="btn btn-danger">Delete Store</button>
+                        </form>                 
+                    </div>
+                 </div>
+                <p></p>
             </div>
