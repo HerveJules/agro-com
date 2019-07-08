@@ -27,8 +27,34 @@ passport.use( 'jwt', new jwtStrategy({
             // if exist handle it
 
             else{
+                // console.log(userFind.role === 'Eax');
+                const role = {
+                    isEax:userFind =>{
+
+                        if (userFind.role === "Eax") {
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    },
+                    isCoop:userFind =>{
+                        if (userFind.role === "Coop") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    },
+                    isBidder:userFind =>{
+                        if (userFind.role === "Bidder") {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                }
                 done(null,{
-                    userFind
+                    userFind,
+                    role
                 });
                 
             }

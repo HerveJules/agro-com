@@ -35,9 +35,10 @@ app.use(coops);
 app.use(bidders);
 app.use(auction);
 app.use(store);
-// app.get('/', (req, res) => {
-//     res.render('all-users');
-// });
+
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
 
 // user page
 
@@ -51,7 +52,7 @@ app.get('/register', (req, res,next) => {
 });
 app.get('/500', (req, res,next) => {
 
-    res.sendFile(path.join(__dirname, '../src/views', '500.html'));    
+    res.render('500');    
 });
 // clear cookies
 app.get('/logout',(req,res)=>{

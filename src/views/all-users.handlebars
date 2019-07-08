@@ -39,9 +39,9 @@
                         
                             <div class="panel-body custom-panel-jw">
                                 
-                                <img id="user_profile" src="{{image}}" alt="Photo">
+                                <img id="user_profile" src="{{image}}{{profile.image}}" alt="Photo">
                                 <p></p>
-                                <p><span class="all-pro-ad">Names: </span>{{firstname}} {{lastname}}</p>
+                                <p><span class="all-pro-ad">Names: </span>{{firstname}} {{user.firstname}} {{lastname}} {{profile.lastname}}</p>
                                 <p><span class="all-pro-ad">email: </span>{{email}}</p>
                                 <p><span class="all-pro-ad">phone: </span>{{tel}}</p>
                                 <p><span class="all-pro-ad">title: </span>{{jobtitle}}</p>

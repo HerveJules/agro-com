@@ -20,6 +20,9 @@ module.exports = {
       payed: {
         type: Sequelize.BOOLEAN
       },
+      bankSlip:{
+        type: Sequelize.STRING,
+      },
       end_date: {
         type: Sequelize.DATE,
       },

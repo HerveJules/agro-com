@@ -7,10 +7,9 @@ class bidder{
 
 	// function to add origanisation related information
 	static async addBidder(req,res){ 
-		// // try to find if not exist create new coop
-		req.headers[req.cookies];
-			console.log(req.headers);
 		try{
+			console.log(req.body);
+			console.log(req.files);
 			const{compName, tin}=req.body;
 			const coudinary_links = await cloud(req.files);
 			const createBidder = await Bidder.create({...req.body,
@@ -21,22 +20,28 @@ class bidder{
 				BankHis:coudinary_links[3],
 				RACertificate:coudinary_links[4],
 				compLogo:coudinary_links[5],
-				compAuditR:coudinary_links[6]
+				compAuditR:coudinary_links[6],
+				BankSlip:coudinary_links[7]
 			});
 			if (createBidder) {
-				return res.status(200).send({
+				return res.status(200).render('index',{
 					status:res.statusCode,
 					message:'Company has added successfully!',
-					createBidder
+					createBidder,
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				})
 			}
 		}catch(err){
 			console.log(err);
-			// return res.status(500).send({
-			// 	status:res.statusCode,
-			// 	message:'Something went wrong on server!'
-			// })
-			console.log(err);
+			return res.redirect({
+				status:res.statusCode,
+				message:'Something went wrong on server!'
+			})
 		}
 	}
 	
@@ -79,7 +84,12 @@ class bidder{
 			}).then((result)=>{
 				return res.rend('all-companies',{
 					findAll,
-					user:req.user.userFind
+					user:req.user.userFind,
+					// role:{
+					// 	isEax:req.user.role.isEax(req.user.userFind),
+					// 	isCoop:req.user.role.isCoop(req.user.userFind),
+					// 	isBidder:req.user.role.isBidder(req.user.userFind),
+					// },
 				})
 			}).catch( err => res.render('all-companies',{
 				user:req.user.userFind,
@@ -97,10 +107,20 @@ class bidder{
 				.then(result =>{
 					return res.render('del-company',{
 						user:req.user.userFind,
+						role:{
+							isEax:req.user.role.isEax(req.user.userFind),
+							isCoop:req.user.role.isCoop(req.user.userFind),
+							isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 						message:'Bidding Company has been destroyed!'
 					})
 				}).catch(err=> res.render('del-company',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:'This company not registered yet!'
 				}))
 		}catch(err){
@@ -117,6 +137,11 @@ class bidder{
 			 		if (findLeader) {
 			 			return res.render('del-company',{
 				 			user:req.user.userFind,
+							role:{
+								isEax:req.user.role.isEax(req.user.userFind),
+								isCoop:req.user.role.isCoop(req.user.userFind),
+								isBidder:req.user.role.isBidder(req.user.userFind),
+							},
 				 			findOne,
 				 			findLeader,
 				 			message:'Company found!'
@@ -124,12 +149,22 @@ class bidder{
 			 		} else {
 			 			return res.render('del-company',{
 			 				user:req.user.userFind,
+							role:{
+								isEax:req.user.role.isEax(req.user.userFind),
+								isCoop:req.user.role.isCoop(req.user.userFind),
+								isBidder:req.user.role.isBidder(req.user.userFind),
+							},
 			 				message:'No representative found!'
 			 			})
 			 		}
 			 		
 			 	}).catch(err=>res.render('del-company',{
 			 		user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 			 		message:'Company not registered yet!'
 			 	}))
 		}catch(err){

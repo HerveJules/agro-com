@@ -22,6 +22,11 @@ class store {
 						return await element.update({quantity}).then((updateResult)=>{
 							return res.render('add-store',{
 								user:req.user.userFind,
+						        role:{
+						            isEax:req.user.role.isEax(req.user.userFind),
+						            isCoop:req.user.role.isCoop(req.user.userFind),
+						            isBidder:req.user.role.isBidder(req.user.userFind),
+						        },
 								message:'Store has been updated successfully!',
 							})
 						})
@@ -31,6 +36,11 @@ class store {
 				return await Store.create({...req.body,CoopId:findCooperative.id}).then((addResult)=>{
 					return res.render('add-store',{
 						user:req.user.userFind,
+						role:{
+						    isEax:req.user.role.isEax(req.user.userFind),
+						    isCoop:req.user.role.isCoop(req.user.userFind),
+						    isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 						status:res.statusCode,
 						message:'Store has been Added successfully!'
 					})
@@ -41,6 +51,11 @@ class store {
 					return await Store.create({...req.body,CoopId:findCooperative.id}).then((createResult)=>{
 						return res.render('add-store',{
 							user:req.user.userFind,
+							role:{
+						        isEax:req.user.role.isEax(req.user.userFind),
+						        isCoop:req.user.role.isCoop(req.user.userFind),
+						        isBidder:req.user.role.isBidder(req.user.userFind),
+						    },
 							status:res.statusCode,
 							message:`Store has been created successfully!`,
 						})
@@ -162,6 +177,12 @@ class store {
 		  	} else {
 		  		// findone failed
 		  		return res.render('Update',{
+		  			user:req.user.userFind,
+		  			role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 		  			message:'commodities not found!'
 		  		})
 		  	}
@@ -183,6 +204,11 @@ class store {
 		  	if (findAll) {
 		  		return res.render('all-Store',{
 		  			user:req.user.userFind,
+		  			role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 		  			message:'Store details retrieved successfully!',
 		  			findAll
 		  		})
@@ -212,6 +238,11 @@ class store {
   		if (edit) {
   			return res.render('edit-store',{
   				user:req.user.userFind,
+  				role:{
+					isEax:req.user.role.isEax(req.user.userFind),
+					isCoop:req.user.role.isCoop(req.user.userFind),
+					isBidder:req.user.role.isBidder(req.user.userFind),
+				},
   				message:'store updated successfully!',
   			})
   		}
@@ -228,6 +259,11 @@ class store {
 			if (findAll) {
 				return res.render('add-store',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					findAll
 				})
 			} else {
@@ -250,6 +286,11 @@ class store {
 			if (findAll) {
 				return res.render('edit-store',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					findAll,
 				})
 			} else {
@@ -271,6 +312,11 @@ class store {
 			if (findOne) {
 				return res.render('del-store',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					findOne,
 					message:`Store has been retrieved successfully`
 				})

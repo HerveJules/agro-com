@@ -20,7 +20,12 @@ router.get('/api/v1/store/modPage',store.storeEditPage);
 // route to get delete store page
 router.get('/api/v1/store/del',(req,res)=>{
 	res.render('del-store',{
-		user:req.user.userFind
+		user:req.user.userFind,
+        role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+        }
 	})
 })
 // route to get info whose to delete
@@ -28,7 +33,12 @@ router.post('/api/v1/store/remove',store.getDelInfo);
 // route to open updates page
 router.get('/api/v1/store/upts/price',(req,res)=>{
 	res.render('Update',{
-		user:req.user.userFind
+		user:req.user.userFind,
+        role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+        }
 	})
 })
 

@@ -18,21 +18,41 @@ class auction {
 					findOne,
 					result,
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:'Auction commodities retrieved successfully!'
 				})
 			} else {
 				return res.render('auction',{
 					user:req.user.userFind,
-					message:'something went wrong on server'
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+					message:'There is no commodity published yet'
 				})
 			}
 			}).catch(err=>res.render('auction',{
 				user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				message:'something went wrong on server'
 			}))
 		}catch(err){
 			return es.render('auction',{
 				user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				message:'something went wrong on server'
 			})
 		}

@@ -87,12 +87,24 @@ class Coops {
 				await Coop.destroy({where:{tin}}).then(result=>{
 					if (result) {
 						return res.render('del-coop',{
+							user:req.user.userFind,
+							role:{
+								isEax:req.user.role.isEax(req.user.userFind),
+								isCoop:req.user.role.isCoop(req.user.userFind),
+								isBidder:req.user.role.isBidder(req.user.userFind),
+							},
 							message:'cooperative has been deleted successfully!',
 						})
 					}
 				})
 			} else{
 				return res.render('del-coop',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:`cooperative with tin ${tin} not exist !`,
 				})
 			}
@@ -108,7 +120,12 @@ class Coops {
 			await Coop.findAll().then(result =>{
 				return res.render('all-coops',{
 					result,
-					user:req.user.userFind
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				})
 			})
 		}catch(err){
@@ -124,11 +141,21 @@ class Coops {
 				return res.render('del-coop',{
 					findOne,
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:`${coopName}  found  successfully!`
 				})
 			} else {
 				return render('del-user',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:`${coopName} not exist check cooperative name!`
 				})
 			}

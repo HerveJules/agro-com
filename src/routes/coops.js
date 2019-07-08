@@ -26,7 +26,12 @@ router.get('/api/v1/coop/ops/fetch',Coop.getCoops);
 // route to get cooperative delete page
 router.get('/api/v1/coop/ops/remove',(req,res)=>{
 	res.render('del-coop',{
-		user:req.user.userFind
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	});
 })
 // route to get info of coop to delete

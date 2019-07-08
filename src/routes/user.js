@@ -23,15 +23,22 @@ router.use('/api/v1/user',passport.authenticate('jwt',{session:false}),middlewar
 router.post('/api/v1/auth/signup',[
   check('password')
   .withMessage('password should be AlphaNumeric')
-  .isLength({ min : 6 })
-  .withMessage('password not less than 6 characters'),
+  .isLength({ min : 8 })
+  .withMessage('password not less than 8 characters'),
   check('email').isEmail()
   .withMessage('enter a valid email'),
 ],User.createUser);
 
 // authentication route
 router.get('/beneficiary',(req,res)=>{
-	res.render('all-coops');
+	res.render('all-coops',{
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
+	});
 })
 router.post('/api/v1/auth/signin',User.auth);
 // delete user 
@@ -55,7 +62,12 @@ router.get('/api/v1/user/all',User.getAllUsers);
 // get add page
 router.get('/api/v1/user/add',(req,res)=>{
 	res.render('add-user',{
-		user:req.user.userFind
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	});
 });
 // route to get edit page
@@ -63,24 +75,63 @@ router.get('/api/v1/user/edit/:id',User.getInfoEdit);
 // route to get delete page
 router.get('/api/v1/user/del',(req,res)=>{
 	res.render('del-user',{
-		user:req.user.userFind
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	})
 })
 // route to get index
 router.get('/api/v1/user/index',(req,res)=>{
 	res.render('index',{
-		user: req.user.userFind
+		user: req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	})
 })
 // route to get edit page without content
 router.get('/api/v1/user/edit',(req,res)=>{
 	res.render('edit-user',{
-		user:req.user.userFind
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	})
 })
 // route to get info for edit with email
 router.post('/api/v1/user/edit',User.getInfoEditByEmail);
 // get user to delete
 router.post('/api/v1/user/remove',User.getInfoDelByEmail);
+// route to render profile info on all users page
+router.get('/api/v1/user/profile',(req,res)=>{
+	const user = req.user.userFind;
+	// console.log(profile.User);
+	res.render('profile',{
+		user,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
+	})
+})
+// route to settings change password
+router.get('/api/v1/user/settings',(req,res)=>{
+	res.render('password-recovery',{
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
+	})
+})
 
 export default router;

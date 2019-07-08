@@ -56,14 +56,27 @@ class Users {
             return res.redirect('/api/v1/user/index');
           } else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Coop'){
             // redirect to coop dashboard
-            return res.send({
-              message:'cooperative board'
-            });
+            // condition for not verified and verified member
+            const user = {
+              id:userfindOne.id,
+            }
+            const token = jwt.sign(user,secretKey);
+            await res.cookie('Authorization',token);
+            if (userfindOne.isverified) {
+              return res.redirect('/api/v1/user/index');
+            } else {
+              return res.redirect('/api/v1/coop');
+            }
+            
           }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Bidder'){
             // redirect to bidder
-            return res.send({
-              message:'Bidder board'
-            });
+            const user = {
+              id:userfindOne.id,
+            }
+            const token = jwt.sign(user,secretKey);
+            await res.cookie('Authorization',token);
+            return res.redirect('/api/v1/add/bidder');
+            
           }else{
             // incorrect password
             return res.redirect('/login');
@@ -90,14 +103,24 @@ class Users {
         return res.render('del-user',{
           status:res.statusCode,
           message:'Not allowed to delete user heading third party members',
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         })
       }
       const destroy = await findOne.destroy();
       if (destroy) {
         return res.render('del-user',{
           message:'User has been deleted successfully!',
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         })
       }
     }catch(err){
@@ -140,17 +163,32 @@ class Users {
         return Store.destroy({where:{CoopId:result.id}}).then(()=>{
           return res.render('del-store',{
             user:req.user.userFind,
+            role:{
+              isEax:req.user.role.isEax(req.user.userFind),
+              isCoop:req.user.role.isCoop(req.user.userFind),
+              isBidder:req.user.role.isBidder(req.user.userFind),
+            },
             message:'Store has been destroyed successfully!'
           })
         }).catch((err)=>{
           return res.render('del-store',{
             user:req.user.userFind,
+            role:{
+              isEax:req.user.role.isEax(req.user.userFind),
+              isCoop:req.user.role.isCoop(req.user.userFind),
+              isBidder:req.user.role.isBidder(req.user.userFind),
+            },
             message:`Error occured ${err}`
           })
         })
       }).catch((err)=>{
         return res.render('',{
           user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
           message:`cooperative not exist!`
         })
       });
@@ -298,12 +336,22 @@ class Users {
       if (findAll) {
         res.render('all-users',{
           findAll,
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         });
       } else {
         res.render('all-users',{
           message:'There is no user registered yet!',
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         })
       }
     }catch(err){
@@ -317,7 +365,12 @@ class Users {
       if (findOne) {
         return res.render('edit-user',{
           findOne:findOne,
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         })
       } else {
         return 0;
@@ -330,11 +383,18 @@ class Users {
   // select info to edit by email
   static async getInfoEditByEmail(req,res){
     try{
-      const findOne = await User.findOne({where:{...req.body}});
+      const {email}=req.body;
+      const findOne = await User.findOne({where:{email}});
       if (findOne) {
         return res.render('edit-user',{
           findOne,
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+          message:'user found successfully!'
         })
       } else {
         return res.render('edit-user',{
@@ -353,7 +413,12 @@ class Users {
       if (findOne) {
         return res.render('del-user',{
           findOne,
-          user:req.user.userFind
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          }
         })
       } 
       return res.render('del-user',{
