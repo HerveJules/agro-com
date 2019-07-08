@@ -16,9 +16,9 @@ class Coops {
 			const {coopName,coopLocation,tin} = req.body;
 			const UserId= req.user.userFind.id;
 			const Op = Sequelize.Op;
+			console.log(tin);
 		// 	// find if exist
-			const findOne = await Coop.findOne({where: {tin}
-			});
+			const findOne = await Coop.findOne({where: {tin}});
 			if (!findOne) {
 				const coudinary_links = await cloud(req.files);
 				const createcoop = Coop.create({

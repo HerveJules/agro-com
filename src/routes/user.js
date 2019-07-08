@@ -84,7 +84,7 @@ router.get('/api/v1/user/del',(req,res)=>{
 	})
 })
 // route to get index
-router.get('/api/v1/user/index',(req,res)=>{
+router.get('/api/v1/index',passport.authenticate('jwt',{session:false}),(req,res)=>{
 	res.render('index',{
 		user: req.user.userFind,
 		role:{
@@ -110,7 +110,7 @@ router.post('/api/v1/user/edit',User.getInfoEditByEmail);
 // get user to delete
 router.post('/api/v1/user/remove',User.getInfoDelByEmail);
 // route to render profile info on all users page
-router.get('/api/v1/user/profile',(req,res)=>{
+router.get('/api/v1/profile',passport.authenticate('jwt',{session:false}),(req,res)=>{
 	const user = req.user.userFind;
 	// console.log(profile.User);
 	res.render('profile',{
@@ -123,14 +123,10 @@ router.get('/api/v1/user/profile',(req,res)=>{
 	})
 })
 // route to settings change password
-router.get('/api/v1/user/settings',(req,res)=>{
+router.get('/api/v1/settings',(req,res)=>{
 	res.render('password-recovery',{
 		user:req.user.userFind,
-		role:{
-			isEax:req.user.role.isEax(req.user.userFind),
-			isCoop:req.user.role.isCoop(req.user.userFind),
-			isBidder:req.user.role.isBidder(req.user.userFind),
-		}
+		
 	})
 })
 

@@ -16,7 +16,7 @@ router.use('/api/v1/coop',passport.authenticate('jwt',{session:false}));
 
 router.use('/api/v1/coop/ops/',middlewares.isAdmin,middlewares.isVerified);
 
-router.post('/api/v1/coop',Coop.createCoop);
+router.post('/api/v1/coop/createCoop',Coop.createCoop);
 // update cooperative
 router.put('/api/v1/coop/ops/update',Coop.updateCoop);
 // destroy cooperative
@@ -36,6 +36,12 @@ router.get('/api/v1/coop/ops/remove',(req,res)=>{
 })
 // route to get info of coop to delete
 router.post('/api/v1/coop/ops/info',Coop.getDelInfo);
+
+router.get('/api/v1/coop/add',(req,res)=>{
+	res.render('add-coop',{
+		user:req.user.userFind,
+	});
+})
 
 	
 export default router;

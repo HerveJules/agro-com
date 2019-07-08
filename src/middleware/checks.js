@@ -16,8 +16,8 @@ class Identity{
 			next();
 		}else{
 			return res.status(403).send({
-				status:res.statusCode,
-				message:'your account is not verified!'
+				message:'Account not verified'
+				`<span>{{message}}</span>`
 			})
 		}
 	}

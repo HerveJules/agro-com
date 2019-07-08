@@ -53,7 +53,7 @@ class Users {
             }
             const token = jwt.sign(user,secretKey);
             await res.cookie('Authorization',token);
-            return res.redirect('/api/v1/user/index');
+            return res.redirect('/api/v1/index');
           } else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Coop'){
             // redirect to coop dashboard
             // condition for not verified and verified member
@@ -62,11 +62,8 @@ class Users {
             }
             const token = jwt.sign(user,secretKey);
             await res.cookie('Authorization',token);
-            if (userfindOne.isverified) {
-              return res.redirect('/api/v1/user/index');
-            } else {
-              return res.redirect('/api/v1/coop');
-            }
+            
+            return res.redirect('/api/v1/coop/add');
             
           }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Bidder'){
             // redirect to bidder
@@ -75,7 +72,7 @@ class Users {
             }
             const token = jwt.sign(user,secretKey);
             await res.cookie('Authorization',token);
-            return res.redirect('/api/v1/add/bidder');
+            return res.redirect('/api/v1/index');
             
           }else{
             // incorrect password
@@ -418,7 +415,7 @@ class Users {
             isEax:req.user.role.isEax(req.user.userFind),
             isCoop:req.user.role.isCoop(req.user.userFind),
             isBidder:req.user.role.isBidder(req.user.userFind),
-          }
+          },
         })
       } 
       return res.render('del-user',{
