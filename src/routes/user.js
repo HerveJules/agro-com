@@ -50,11 +50,11 @@ router.post('/api/v1/user/coop/del/:coopName',User.deleteUserCoop);
 // delete user with all related info of the bidding company
 router.delete('/api/v1/user/bidder/del',validators.validateEmail,User.deleteUserBidder);
 // verify account to enable navigation to sensitive routes
-router.post('/api/v1/user/verify/:id/:user',User.verify); 
+router.post('/api/v1/user/verify/:id/:user',User.verify);
 //grant admin privilege to user acount 
 router.post('/api/v1/User/grant',User.GrantAdmin);
 // get user heading cooperative with any info regarding cooperative
-router.get('/api/v1/user/coop/getfull',validators.validateEmail,User.getUserCoopInfo);
+router.get('/api/v1/user/coop/getfull',passport.authenticate('jwt',{session:false}),User.getUserCoopInfo);
 // get user heading bidding company with full info
 router.get('/api/v1/user/bidder/getfull',validators.validateEmail,User.getUserBidderInfo);
 // get all users
@@ -123,7 +123,7 @@ router.get('/api/v1/profile',passport.authenticate('jwt',{session:false}),(req,r
 	})
 })
 // route to settings change password
-router.get('/api/v1/settings',(req,res)=>{
+router.get('/api/v1/user/settings',(req,res)=>{
 	res.render('password-recovery',{
 		user:req.user.userFind,
 		role:{
@@ -145,5 +145,7 @@ router.get('/api/v1/user/finGrantee',(req,res)=>{
 	})
 })
 router.post('/api/v1/user/finGrant',User.getGrantInfo);
+// router to get publish 
+router.get('/api/v1/coop/store',passport.authenticate('jwt',{session:false}),User.published);
 
 export default router;

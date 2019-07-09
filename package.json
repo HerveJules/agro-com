@@ -34,6 +34,7 @@
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.3",
     "eslint-config-airbnb": "^17.1.0",
     "nodemon": "^1.18.11"

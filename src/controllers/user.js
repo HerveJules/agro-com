@@ -228,14 +228,14 @@ class Users {
   // verifying account to be able to navigate to sensitive routes
   static async verify(req,res){
     try{
-      const {id,user}=req.params;
+      const {id,userT}=req.params;
       // find user by email
-      const findOne = await User.findOne({where:req.params});
-      console.log(findOne);
+      console.log(req.params.id);
+      const findOne = await User.findOne({where:{id:req.params.id}});
       if (findOne) {
         await findOne.update({isverified:true})
         .then(user => {
-          if (user == 'coop') {
+          if (userT == 'coop') {
             return res.render('all-coops',{
               user:req.user.userFind,
               role:{
@@ -259,9 +259,15 @@ class Users {
           
         });
       }else{
-        return res.status(400).send({
-          status:res.statusCode,
-          message:'User not found in database!'
+
+        return res.render('all-companies',{
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+          message:'User not found!'
         })
       }
     }catch(err){
@@ -278,7 +284,6 @@ class Users {
     try{
       // find user by email
       const findOne = await User.findOne({where:{email:req.body.email}});
-      console.log(findOne.role);
       if (findOne && findOne.role ==='Eax') {
         await findOne.update({isadmin:true,isverified:true,where:{email:req.body.email}})
         .then(user => {
@@ -312,18 +317,35 @@ class Users {
   // get user heading cooperative full information
   static async getUserCoopInfo(req,res){
     try{
-      const findOne = await User.findOne({where:{email:req.body.email},include:[{model:Coop,include:[{model:Store,include:[Auction]}]}]});
-      if (findOne) {
-        return res.status(200).send({
-          status:res.statusCode,
+      // console.log(req.user.userFind.email);
+      // const{email} = req.user.userFind.email;
+      // where:{email:req.user.userFind.email},include:[{model:Coop,include:[{model:Store,include:[Auction]}]}]});
+      const findOne = await User.findOne({where:{email:req.user.userFind.email},include:[{model:Coop,include:[{model:Store,include:[Auction]}]}]});
+      console.log(findOne.Coop.Stores);
+      if (findOne.Coop.Stores) {
+        return res.render('coop-store',{
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
           findOne
+        })
+      }else{
+        return res.render('coop-store',{
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+          message:'user not found',
         })
       }
     }catch(err){
-      return res.status(500).send({
-        status:res.statusCode,
-        message:'Something went wrong'
-      }) 
+      console.log(err);
+      return res.render('500');
     }
   }
   // get user heading bidding company full information
@@ -482,5 +504,45 @@ class Users {
       return res.render('500');
     }
   }
+  // 
+  static async published(req,res){
+    try{
+      const {email}=req.user.userFind;
+      const findOne = await User.findOne({where:{email}});
+      if (findOne) {
+        await Coop.findOne({where:{UserId:findOne.id}})
+          .then((result)=>{
+            return res.render('publish',{
+              findAll:result,
+              user:req.user.userFind,
+              role:{
+                isEax:req.user.role.isEax(req.user.userFind),
+                isCoop:req.user.role.isCoop(req.user.userFind),
+                isBidder:req.user.role.isBidder(req.user.userFind),
+              },
+            })
+          })
+      } else {
+        return res.render('404',{
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+        })
+      }
+    }catch(err){
+      return res.render('500',{
+        user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+      })
+    }
+  }
+  
 }
 export default Users;

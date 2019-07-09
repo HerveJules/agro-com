@@ -73,7 +73,7 @@ class store {
     //find product with tin
     try{
     	const {productName,quality, quantity } = req.body;
-    	const findOne = await User.findOne({where:{id:req.user.id},include:[{model:Coop,include:[Store]}]});
+    	const findOne = await User.findOne({where:{id:req.user.userFind.id},include:[{model:Coop,include:[Store]}]});
 
     	if (findOne.Coop.Stores.length !== 0) {
     		 for(const element of findOne.Coop.Stores){
@@ -87,8 +87,14 @@ class store {
 		    			const StoreQuantity = element.quantity - quantity;
 		    			const updateStore = await element.update({quantity:StoreQuantity});
 		    			if (updateStore) {
-		    				return res.status(200).send({
+		    				return res.render('publish',{
 		    					status:res.statusCode,
+		    					user:req.user.userFind,
+			    				role:{
+							        isEax:req.user.role.isEax(req.user.userFind),
+							        isCoop:req.user.role.isCoop(req.user.userFind),
+							        isBidder:req.user.role.isBidder(req.user.userFind),
+							    },
 		    					message:'Product has been published to auction successfully!',
 		    					// current store position after publishing to auction
 		    					data:{
@@ -104,20 +110,36 @@ class store {
     			}
     		}
     		// input data doesn't fit the above condition
-    		return res.status(400).send({
-    			status:res.statusCode,
+    		return res.render('publish',{
+    			user:req.user.userFind,
+				role:{
+					isEax:req.user.role.isEax(req.user.userFind),
+					isCoop:req.user.role.isCoop(req.user.userFind),
+					isBidder:req.user.role.isBidder(req.user.userFind),
+				},
     			message:'Request not fit the acceptance!'
     		})		
     	}
     	// the store is empty
-    	return res.status(400).send({
+    	return res.render('publish',{
+    		user:req.user.userFind,
+			role:{
+				isEax:req.user.role.isEax(req.user.userFind),
+				isCoop:req.user.role.isCoop(req.user.userFind),
+				isBidder:req.user.role.isBidder(req.user.userFind),
+			},
     		status:res.statusCode,
-    		error:'Cooperative have no Store yet!'
+    		message:'Cooperative have no Store yet!'
     	})
     }catch(err){
-    	return res.status(500).send({
-    		status:res.statusCode,
-    		error:'Something went wrong on the server'
+    	return res.render('500',{
+    		user:req.user.userFind,
+			role:{
+				isEax:req.user.role.isEax(req.user.userFind),
+				isCoop:req.user.role.isCoop(req.user.userFind),
+				isBidder:req.user.role.isBidder(req.user.userFind),
+			},
+    		
     	})
     }
   }

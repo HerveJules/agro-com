@@ -157,6 +157,8 @@ class Coops {
 			return res.render('500');
 		}
 	}
+	// self coop info
+	
 }
 
 // export coops  
