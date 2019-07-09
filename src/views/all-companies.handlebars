@@ -1,0 +1,85 @@
+<div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="breadcome-list single-page-breadcome">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="breadcome-heading">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <ul class="breadcome-menu">
+                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                            </li>
+                                            <li><span class="bread-blod">Company</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contacts-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <span>{{message}}</span>
+                        <p></p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap drp-lst">
+                            <h4>Company List</h4>
+                            <div class="asset-inner">
+                                <table>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>location</th>
+                                        <th>tin</th>
+                                        <th>Bank Record</th>
+                                        <th>RDB certificate</th>
+                                        <th>RRA certificate</th>
+                                        <th>Agreement</th>
+                                        <th>Signed letter</th>
+                                        <th>Audit Report</th>
+                                        <th>Setting</th>
+                                    </tr>
+                                    {{#each findAll}}
+                                    <tr>
+                                        <td>{{compName}}</td>
+                                        <td>{{compLocation}}</td>
+                                        <td>{{tin}}</td>
+                                        <td><a href="{{BankHis}}">Bank records</a></td>
+                                        <td><a href="{{RBCertificate}}">RDB certificate</a></td>
+                                         <td><a href="{{RACertificate}}">RRA certificate</a></td>
+                                        <td><a href="{{compAgrees}}">Agreement</a></td>
+                                        <td><a href="{{LeaderSignL}}">Signed letter</a></td>
+                                        <td><a href="{{compAuditR}}">Audit Report</a></td>
+                                        <form action="/api/v1/user/verify/{{UserId}}/bidder" method="post">
+                                        <td>
+                                            <button data-toggle="tooltip" title="verify" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    {{/each}}
+                                </table>
+                            </div>
+                            <div class="custom-pagination">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>

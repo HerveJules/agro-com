@@ -9,7 +9,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 
 
 passport.use( 'jwt', new jwtStrategy({
-        jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+        jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
         secretOrKey   : secretKey
     },async (Payload, done) => {
 
@@ -27,11 +27,34 @@ passport.use( 'jwt', new jwtStrategy({
             // if exist handle it
 
             else{
+                // console.log(userFind.role === 'Eax');
+                const role = {
+                    isEax:userFind =>{
+
+                        if (userFind.role === "Eax") {
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    },
+                    isCoop:userFind =>{
+                        if (userFind.role === "Coop") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    },
+                    isBidder:userFind =>{
+                        if (userFind.role === "Bidder") {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                }
                 done(null,{
-                    id:userFind.id,
-                    email:userFind.email,
-                    isadmin:userFind.isadmin,
-                    isverified:userFind.isverified,
+                    userFind,
+                    role
                 });
                 
             }

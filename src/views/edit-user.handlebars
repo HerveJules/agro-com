@@ -1,0 +1,112 @@
+<div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="breadcome-list single-page-breadcome">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="breadcome-heading">
+                                            <form action="/api/v1/user/edit" method="post" class="">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <input type="text" required="" name="email" placeholder="Search by email..." class="search-int form-control">
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
+                                                        <button class="btn btn-default">find</button>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <ul class="breadcome-menu">
+                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                            </li>
+                                            <li><span class="bread-blod">beneficiary</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Single pro tab review Start-->
+        <div class="single-pro-review-area mt-t-30 mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-payment-inner-st">
+                            <ul id="myTabedu1" class="tab-review-design">
+                                <li class="active"><a href="#description">Edit Account Information</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                <div class="product-tab-list tab-pane fade active in" id="description">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div id="dropzone1" class="pro-ad">
+                                                    <form action="/api/v1/update/user/{{findOne.id}}" method="post" enctype="multipart/form-data" id="demo1-upload">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <span>{{message}}</span>
+                                                                <div class="form-group">
+                                                                    <input required="" name="firstname" type="text" class="form-control" placeholder="firstname" value="{{findOne.firstname}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input required="" type="text" name="adress" class="form-control" placeholder="address" value="{{findOne.adress}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input required="" type="number" name="tel" class="form-control" placeholder="phone number" value="{{findOne.tel}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input required="" type="number" name="ID" class="form-control" placeholder="National ID" value="{{findOne.ID}}">
+                                                                </div>
+                                                                
+                                                            
+                                                                
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input required="" type="text" name="lastname" class="form-control" placeholder="lastname" value="{{findOne.lastname}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input required="" type="text" name="jobtitle" class="form-control" placeholder="jobtitle" value="{{findOne.jobtitle}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input required=""  type="text" name="email" class="form-control" placeholder="Email" value="{{findOne.email}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="form-group"> 
+                                                                        <input type="file" name="uploadfile" value="{{findOne.image}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="payment-adress">
+                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

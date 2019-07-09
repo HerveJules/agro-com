@@ -1,6 +1,6 @@
 import db from "../models";
 import Sequelize from "sequelize";
-
+import cloud from "../helpers/clouds";
 const { Store, Coop, User, Auction} = db;
 
 // class for store operation controller
@@ -11,10 +11,8 @@ class store {
   static async addStore(req, res) {
   	// destruct params and req body
 		try {
-			const { coopName } = req.params;
-			const {productName,quality} = req.body;
+			const {coopName,productName,quality,quantity,price} = req.body;
 			const findCooperative = await Coop.findOne({where: { coopName },include:[Store]})
-
 			if (findCooperative.Stores.length !==0 ) {
 				// update the existing store
 				const quantity = +findCooperative.Stores[0].quantity + +req.body.quantity;
@@ -22,54 +20,50 @@ class store {
 					// confirm wether there is a strore of same product to coop
 					if (element.productName === req.body.productName && element.quality === req.body.quality) {
 						return await element.update({quantity}).then((updateResult)=>{
-							return res.status(200).send({
-								status:res.statusCode,
+							return res.render('add-store',{
+								user:req.user.userFind,
+						        role:{
+						            isEax:req.user.role.isEax(req.user.userFind),
+						            isCoop:req.user.role.isCoop(req.user.userFind),
+						            isBidder:req.user.role.isBidder(req.user.userFind),
+						        },
 								message:'Store has been updated successfully!',
-								data:{
-									product:updateResult.productName,
-									quality:updateResult.quality,
-									quantity:updateResult.quantity,
-									price:updateResult.price
-								}
 							})
 						})
 					}
 				}
 				// if there is no existing same product then add new product to store
 				return await Store.create({...req.body,CoopId:findCooperative.id}).then((addResult)=>{
-					return res.status(200).send({
+					return res.render('add-store',{
+						user:req.user.userFind,
+						role:{
+						    isEax:req.user.role.isEax(req.user.userFind),
+						    isCoop:req.user.role.isCoop(req.user.userFind),
+						    isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 						status:res.statusCode,
-						message:'Store has been Added successfully!',
-						data:{
-							product:addResult.productName,
-							quality:addResult.quality,
-							quantity:addResult.quantity,
-							price:addResult.price
-						}
+						message:'Store has been Added successfully!'
 					})
 				})
 						
 				}else{
 					// create new store for the first time 
 					return await Store.create({...req.body,CoopId:findCooperative.id}).then((createResult)=>{
-						return res.status(200).send({
+						return res.render('add-store',{
+							user:req.user.userFind,
+							role:{
+						        isEax:req.user.role.isEax(req.user.userFind),
+						        isCoop:req.user.role.isCoop(req.user.userFind),
+						        isBidder:req.user.role.isBidder(req.user.userFind),
+						    },
 							status:res.statusCode,
-							message:'Store has been created successfully!',
-							data:{
-								product:createResult.productName,
-								quality:createResult.quality,
-								quantity:createResult.quantity,
-								price:createResult.price
-							}
+							message:`Store has been created successfully!`,
 						})
 					})
 				}
 
 		} catch (error) {
-			return res.status(500).send({
-				status: res.statusCode,
-				error: 'Something went wrong on the server'
-			})
+			return res.render('500');
 		}
   }
 
@@ -173,25 +167,30 @@ class store {
 		  		// if found update price
 		  		const Prev_Price = findOne.price;
 		  		return await findOne.update({price}).then(priceResult => {
-		  			return res.status(200).send({
-		  				status:res.statusCode,
+		  			return res.render('Update',{
+		  				user:req.user.userFind,
+			  			role:{
+							isEax:req.user.role.isEax(req.user.userFind),
+							isCoop:req.user.role.isCoop(req.user.userFind),
+							isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 		  				message:'Price has been updated successfully!',
-		  				Prev_Price,
-		  				data:{
-		  					priceResult
-		  				}
 		  			})
 		  		})
 		  	} else {
 		  		// findone failed
-		  		return res.status(400).send({
-		  			status:res.statusCode,
+		  		return res.render('Update',{
+		  			user:req.user.userFind,
+		  			role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 		  			message:'commodities not found!'
 		  		})
 		  	}
 	  	}catch(err){
-	  		return res.status(500).send({
-	  			status:res.statusCode,
+	  		return res.render('Update',{
 	  			message:'Something went wrong on server!'
 	  		})
 	  	}
@@ -202,16 +201,19 @@ class store {
   static async storeDetails(req,res){
   	// select all store details
 	  	try{
-	  		const findAll = await Store.findAll();
+	  		const findAll = await Store.findAll({
+	  			attributes:['productName','quality','quantity','price','storeStation','createdAt']
+	  		});
 		  	if (findAll) {
-		  		const data = [];
-		  		for(const element of findAll){
-		  			data.push(element);
-		  		}
-		  		return res.status(200).send({
-		  			status:res.statusCode,
+		  		return res.render('all-Store',{
+		  			user:req.user.userFind,
+		  			role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 		  			message:'Store details retrieved successfully!',
-		  			data
+		  			findAll
 		  		})
 		  	} else {
 		  		return res.status(400).send({
@@ -232,23 +234,114 @@ class store {
   static async updateStore(req,res){
   	// destruct storeid from params
   	try{
-  		const {StoreId} = req.params;
-  	
-  		const edit = await Store.update({...req.body},{where:{id:StoreId}});
+  		const {productName,quantity,price,quality,id}= req.body;
+  		const Op = Sequelize.Op;
+  		const coudinary_links = await cloud(req.files);
+  		const edit = await Store.update({image:coudinary_links[0],quantity,price},{where:{[Op.and]:[{CoopId:id},{productName},{quality}]}});
+  		console.log(edit);
   		if (edit) {
-  			return res.status(200).send({
-  				status:res.statusCode,
-  				message:'Commodities updated successfully!',
+  			return res.render('edit-store',{
+  				user:req.user.userFind,
+  				role:{
+					isEax:req.user.role.isEax(req.user.userFind),
+					isCoop:req.user.role.isCoop(req.user.userFind),
+					isBidder:req.user.role.isBidder(req.user.userFind),
+				},
+  				message:'store updated successfully!',
   			})
   		}
   	}catch(err){
-  		console.log(err)
-  		return res.status(500).send({
-  			status:res.statusCode,
-  			message:'Something went wrong on server!'
-  		})
+  		return res.render('500');
   	}
   }
+  // get cooperative whose to add store
+  static async storeAddPage(req,res){
+		try{
+			const findAll = await Coop.findAll({
+				attributes:['coopName']
+			});
+			if (findAll) {
+				return res.render('add-store',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+					findAll
+				})
+			} else {
+				return res.render('add-store',{
+					message:'There is no cooperative registered yet!'
+				})
+			}
+		}catch(err){
+			return res.render('500');
+		}
+	}
+	// get cooperative with it's respective store
+
+	static async storeEditPage(req,res){
+		try{
+			const {coopName} = req.body;
+			const findOne = await Coop.findOne({where:{coopName},include:[Store]});
+			if (findOne) {
+				return res.render('edit-store',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+					findAll:findOne,
+				})
+			} else {
+				return res.render('edit-store',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+				})
+			}
+
+		}catch(err){
+			return res.render('500');
+		}
+	}
+	// get info shown in card to delete
+	static async getDelInfo(req,res){
+		try{
+			const{coopName}=req.body;
+			const findOne = await Coop.findOne({where:{coopName},include:[Store]});
+			console.log(findOne);
+			if (findOne) {
+				return res.render('del-store',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+					findOne,
+					message:`Store has been retrieved successfully`
+				})
+			} else {
+				return res.render('del-store',{
+					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
+					message:'Store not found'
+				})
+			}
+		}catch(err){
+			return res.render('500');
+		}
+	}
 
 }
 

@@ -41,6 +41,9 @@ module.exports = {
       leaderCert:{
         type: Sequelize.STRING,
       },
+      bankSlip:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
