@@ -32,7 +32,7 @@
                             <h4>Store</h4>
                             <span>{{message}}</span>
                             <div class="add-product">
-                                <a href="add-course.html">Add Store</a>
+                                <a href="/api/v1/store/add">Add Store</a>
                             </div>
                             <div class="asset-inner">
                                 <table>
@@ -55,8 +55,9 @@
                                         <td>{{createdAt}}</td>
                                         <form action="#" method="post">
                                         <td>
-                                            <button data-toggle="tooltip" href="/api/v1/store/modPage" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            <a data-toggle="tooltip" href="/api/v1/store/modPage" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            &nbsp&nbsp
+                                            <a href="/api/v1/store/del" data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </td>
                                         </form>
                                     </tr>

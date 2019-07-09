@@ -63,10 +63,7 @@ class store {
 				}
 
 		} catch (error) {
-			return res.status(500).send({
-				status: res.statusCode,
-				error: 'Something went wrong on the server'
-			})
+			return res.render('500');
 		}
   }
 
@@ -171,6 +168,12 @@ class store {
 		  		const Prev_Price = findOne.price;
 		  		return await findOne.update({price}).then(priceResult => {
 		  			return res.render('Update',{
+		  				user:req.user.userFind,
+			  			role:{
+							isEax:req.user.role.isEax(req.user.userFind),
+							isCoop:req.user.role.isCoop(req.user.userFind),
+							isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 		  				message:'Price has been updated successfully!',
 		  			})
 		  		})
@@ -231,10 +234,11 @@ class store {
   static async updateStore(req,res){
   	// destruct storeid from params
   	try{
-  		const {productName,quality,id}= req.body;
+  		const {productName,quantity,price,quality,id}= req.body;
   		const Op = Sequelize.Op;
   		const coudinary_links = await cloud(req.files);
   		const edit = await Store.update({image:coudinary_links[0],quantity,price},{where:{[Op.and]:[{CoopId:id},{productName},{quality}]}});
+  		console.log(edit);
   		if (edit) {
   			return res.render('edit-store',{
   				user:req.user.userFind,
@@ -247,7 +251,7 @@ class store {
   			})
   		}
   	}catch(err){
-  		return res.redirect('/500');
+  		return res.render('500');
   	}
   }
   // get cooperative whose to add store
@@ -272,18 +276,16 @@ class store {
 				})
 			}
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 	// get cooperative with it's respective store
 
 	static async storeEditPage(req,res){
 		try{
-			const findAll = await Coop.findAll({
-				attributes:['coopName','id'],include:[Store]
-			})
-			console.log(findAll[0].Stores)
-			if (findAll) {
+			const {coopName} = req.body;
+			const findOne = await Coop.findOne({where:{coopName},include:[Store]});
+			if (findOne) {
 				return res.render('edit-store',{
 					user:req.user.userFind,
 					role:{
@@ -291,16 +293,21 @@ class store {
 						isCoop:req.user.role.isCoop(req.user.userFind),
 						isBidder:req.user.role.isBidder(req.user.userFind),
 					},
-					findAll,
+					findAll:findOne,
 				})
 			} else {
 				return res.render('edit-store',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				})
 			}
 
 		}catch(err){
-
+			return res.render('500');
 		}
 	}
 	// get info shown in card to delete
@@ -323,11 +330,16 @@ class store {
 			} else {
 				return res.render('del-store',{
 					user:req.user.userFind,
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 					message:'Store not found'
 				})
 			}
 		}catch(err){
-
+			return res.render('500');
 		}
 	}
 

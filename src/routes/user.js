@@ -50,9 +50,9 @@ router.post('/api/v1/user/coop/del/:coopName',User.deleteUserCoop);
 // delete user with all related info of the bidding company
 router.delete('/api/v1/user/bidder/del',validators.validateEmail,User.deleteUserBidder);
 // verify account to enable navigation to sensitive routes
-router.post('/api/v1/user/verify/:id',User.verify); 
+router.post('/api/v1/user/verify/:id/:user',User.verify); 
 //grant admin privilege to user acount 
-router.put('/api/v1/User/grant',User.GrantAdmin);
+router.post('/api/v1/User/grant',User.GrantAdmin);
 // get user heading cooperative with any info regarding cooperative
 router.get('/api/v1/user/coop/getfull',validators.validateEmail,User.getUserCoopInfo);
 // get user heading bidding company with full info
@@ -126,8 +126,24 @@ router.get('/api/v1/profile',passport.authenticate('jwt',{session:false}),(req,r
 router.get('/api/v1/settings',(req,res)=>{
 	res.render('password-recovery',{
 		user:req.user.userFind,
-		
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
 	})
 })
+// route to open grant page
+router.get('/api/v1/user/finGrantee',(req,res)=>{
+	res.render('grantAdmin',{
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		}
+	})
+})
+router.post('/api/v1/user/finGrant',User.getGrantInfo);
 
 export default router;

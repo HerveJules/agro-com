@@ -35,7 +35,7 @@ class Users {
       }
     } catch (err) {
       
-      res.redirect('/500');
+      return res.render('500');
     }
   }
   // function that do login operationscompareHashedPassword
@@ -63,7 +63,7 @@ class Users {
             const token = jwt.sign(user,secretKey);
             await res.cookie('Authorization',token);
             
-            return res.redirect('/api/v1/coop/add');
+            return res.redirect('/api/v1/index');
             
           }else if (compareHashedPassword(password,userfindOne.password) && userfindOne.role == 'Bidder'){
             // redirect to bidder
@@ -85,7 +85,7 @@ class Users {
         }
     } catch (err) {
       // internal errors
-      res.redirect('/500');
+      return res.render('500');
     }
   }
   // delete user
@@ -121,8 +121,7 @@ class Users {
         })
       }
     }catch(err){
-      console.log(err);
-      return res.redirect('/500');
+      return res.render('500');
     }
   }
   //update user
@@ -229,17 +228,35 @@ class Users {
   // verifying account to be able to navigate to sensitive routes
   static async verify(req,res){
     try{
+      const {id,user}=req.params;
       // find user by email
-      console.log(req.params);
       const findOne = await User.findOne({where:req.params});
       console.log(findOne);
       if (findOne) {
         await findOne.update({isverified:true})
         .then(user => {
-          return res.status(200).send({
-            status:res.statusCode,
-            message:'User has been verified successfully!'
-          })
+          if (user == 'coop') {
+            return res.render('all-coops',{
+              user:req.user.userFind,
+              role:{
+                isEax:req.user.role.isEax(req.user.userFind),
+                isCoop:req.user.role.isCoop(req.user.userFind),
+                isBidder:req.user.role.isBidder(req.user.userFind),
+              },
+              message:'User has been verified successfully!'
+            })
+          } else {
+            return res.render('all-companies',{
+              user:req.user.userFind,
+              role:{
+                isEax:req.user.role.isEax(req.user.userFind),
+                isCoop:req.user.role.isCoop(req.user.userFind),
+                isBidder:req.user.role.isBidder(req.user.userFind),
+              },
+              message:'User has been verified successfully!'
+            })
+          }
+          
         });
       }else{
         return res.status(400).send({
@@ -261,25 +278,33 @@ class Users {
     try{
       // find user by email
       const findOne = await User.findOne({where:{email:req.body.email}});
-      if (findOne) {
-        await findOne.update({isadmin:true,where:{email:req.body.email}})
+      console.log(findOne.role);
+      if (findOne && findOne.role ==='Eax') {
+        await findOne.update({isadmin:true,isverified:true,where:{email:req.body.email}})
         .then(user => {
-          return res.status(200).send({
-            status:res.statusCode,
-            message:'Administrator privilege granted successfully!'
+          return res.render('grantAdmin',{
+            user:req.user.userFind,
+            role:{
+              isEax:req.user.role.isEax(req.user.userFind),
+              isCoop:req.user.role.isCoop(req.user.userFind),
+              isBidder:req.user.role.isBidder(req.user.userFind),
+            },
+            message:`${user.firstname} granted Administrator privilege!`
           })
         });
       }else{
-        return res.status(400).send({
-          status:res.statusCode,
-          message:'User not found in database!'
+        return res.render('grantAdmin',{
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+          message:'Email not associated to  Eax User!'
         })
       }
     }catch(err){
-      return res.status(500).send({
-        status:res.statusCode,
-        message:'Something went wrong!'
-      })
+      return res.render('500');
     }
   }
 
@@ -352,7 +377,7 @@ class Users {
         })
       }
     }catch(err){
-      return res.redirect('/500');
+      return res.render('500');
     }
   }
   // select info to edit
@@ -374,7 +399,7 @@ class Users {
       }
     }catch(err){
       console.log(err);
-      return res.redirect('/500');
+      return res.render('500');
     }
   }
   // select info to edit by email
@@ -399,7 +424,7 @@ class Users {
         })
       }
     }catch(err){
-      return res.redirect('/500');
+      return res.render('500');
     }
   }
   // select info to delete by email
@@ -419,13 +444,43 @@ class Users {
         })
       } 
       return res.render('del-user',{
-        message:'There is no Eax user with this email'
+        user:req.user.userFind,
+        role:{
+          isEax:req.user.role.isEax(req.user.userFind),
+          isCoop:req.user.role.isCoop(req.user.userFind),
+          isBidder:req.user.role.isBidder(req.user.userFind),
+        },
+        message:'There is no Eax user with this email',
       });
     }catch(err){
-      return res.redirect('/500');
+      return res.render('500');
+    
     }
   }
-
+  // grant info
+  static async getGrantInfo(req,res){
+    try{
+      const {email}=req.body;
+      const findOne = await User.findOne({where:{email}});
+      if (findOne) {
+        return res.render('grantAdmin',{
+          findOne,
+          user:req.user.userFind,
+          role:{
+            isEax:req.user.role.isEax(req.user.userFind),
+            isCoop:req.user.role.isCoop(req.user.userFind),
+            isBidder:req.user.role.isBidder(req.user.userFind),
+          },
+          message:'user found successfully!'
+        })
+      } else {
+        return res.render('grantAdmin',{
+          message:'There is no user with this email'
+        })
+      }
+    }catch(err){
+      return res.render('500');
+    }
+  }
 }
-
 export default Users;

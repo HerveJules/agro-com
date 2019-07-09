@@ -8,15 +8,11 @@ class Coops {
 
 	// creating a function for add cooperative
 	static async createCoop(req,res){
-		// req.headers[req.cookies];
-		// 	console.log(req.headers);
 		// // try and catch to find if not exist and create new coop
 		try{ 
-			console.log(req.user.userFind.id);
 			const {coopName,coopLocation,tin} = req.body;
 			const UserId= req.user.userFind.id;
 			const Op = Sequelize.Op;
-			console.log(tin);
 		// 	// find if exist
 			const findOne = await Coop.findOne({where: {tin}});
 			if (!findOne) {
@@ -32,20 +28,20 @@ class Coops {
 					coopSignL:coudinary_links[3],
 					leaderCert:coudinary_links[4]
 				}).then(result =>{
-					return res.status(200).send({
-						status:res.statusCode,
+					return res.render('add-coop',{
+						user:req.user.userFind,
+						role:{
+							isEax:req.user.role.isEax(req.user.userFind),
+							isCoop:req.user.role.isCoop(req.user.userFind),
+							isBidder:req.user.role.isBidder(req.user.userFind),
+						},
 						message:'cooperative created successfully!',
-						result
 					})
 				})
 			}
 		}
 		catch(err){
-			// res.status(500).send({
-			// 	status:res.statusCode,
-			// 	message:'Check internet connection!',
-			// })
-			console.log(err)
+			return res.render('500');
 		}
 	}
 	// update coop function
@@ -111,7 +107,7 @@ class Coops {
 				
 			
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 	// get all coops
@@ -129,7 +125,7 @@ class Coops {
 				})
 			})
 		}catch(err){
-			res.redirect('/500');
+			res.render('500');
 		}
 	}
 	// get info of coop to delete
@@ -137,7 +133,7 @@ class Coops {
 		try{
 			const{coopName}=req.body;
 			const findOne = await Coop.findOne({where:{coopName}});
-			if (findOne) {
+			if (findOne != null) {
 				return res.render('del-coop',{
 					findOne,
 					user:req.user.userFind,
@@ -148,19 +144,17 @@ class Coops {
 					},
 					message:`${coopName}  found  successfully!`
 				})
-			} else {
-				return render('del-user',{
-					user:req.user.userFind,
-					role:{
-						isEax:req.user.role.isEax(req.user.userFind),
-						isCoop:req.user.role.isCoop(req.user.userFind),
-						isBidder:req.user.role.isBidder(req.user.userFind),
-					},
-					message:`${coopName} not exist check cooperative name!`
-				})
-			}
+			} 
+			return res.render('del-coop',{
+				user:req.user.userFind,
+				role:{
+					isEax:req.user.role.isEax(req.user.userFind),
+					isCoop:req.user.role.isCoop(req.user.userFind),
+					isBidder:req.user.role.isBidder(req.user.userFind),
+				},
+			})
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 }

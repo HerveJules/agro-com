@@ -8,12 +8,10 @@ class bidder{
 	// function to add origanisation related information
 	static async addBidder(req,res){ 
 		try{
-			console.log(req.body);
-			console.log(req.files);
 			const{compName, tin}=req.body;
 			const coudinary_links = await cloud(req.files);
 			const createBidder = await Bidder.create({...req.body,
-				UserId:req.user.id,
+				UserId:req.user.userFind.id,
 				RBCertificate:coudinary_links[0],
 				compAgrees:coudinary_links[1],
 				LeaderSignL:coudinary_links[2],
@@ -24,7 +22,7 @@ class bidder{
 				BankSlip:coudinary_links[7]
 			});
 			if (createBidder) {
-				return res.status(200).render('index',{
+				return res.status(200).render('add-comp',{
 					status:res.statusCode,
 					message:'Company has added successfully!',
 					createBidder,
@@ -37,11 +35,7 @@ class bidder{
 				})
 			}
 		}catch(err){
-			console.log(err);
-			return res.redirect({
-				status:res.statusCode,
-				message:'Something went wrong on server!'
-			})
+			return res.render('500');
 		}
 	}
 	
@@ -76,27 +70,30 @@ class bidder{
 	}
 	// get all bidder companies
 	static async getAll(req,res){
-		try{
+		try{	
 			const findAll = await Bidder.findAll({
 				attributes:['compName','compLocation',
 				'tin','BankHis','RBCertificate','RACertificate',
-				'compAgrees','LeaderSignL','compAuditR']
-			}).then((result)=>{
-				return res.rend('all-companies',{
+				'compAgrees','LeaderSignL','compAuditR','bankSlip']
+			});
+			if (findAll) {
+				return res.render('all-companies',{
 					findAll,
 					user:req.user.userFind,
-					// role:{
-					// 	isEax:req.user.role.isEax(req.user.userFind),
-					// 	isCoop:req.user.role.isCoop(req.user.userFind),
-					// 	isBidder:req.user.role.isBidder(req.user.userFind),
-					// },
+					role:{
+						isEax:req.user.role.isEax(req.user.userFind),
+						isCoop:req.user.role.isCoop(req.user.userFind),
+						isBidder:req.user.role.isBidder(req.user.userFind),
+					},
 				})
-			}).catch( err => res.render('all-companies',{
-				user:req.user.userFind,
-				message:'No bidder company registered now!'
-			}))
+			} else {
+				return res.render('all-companies',{
+					message:'No Company registered yet!',
+					user:req.user.userFind
+				})
+			}
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 	// destroy company with tin number
@@ -124,7 +121,7 @@ class bidder{
 					message:'This company not registered yet!'
 				}))
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 	// get info by tin
@@ -168,7 +165,7 @@ class bidder{
 			 		message:'Company not registered yet!'
 			 	}))
 		}catch(err){
-			return res.redirect('/500');
+			return res.render('500');
 		}
 	}
 

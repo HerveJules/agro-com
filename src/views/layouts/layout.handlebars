@@ -77,19 +77,19 @@
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
                         <li class="active">
-                            <a class="has-arrow" href="">
+                            <a class="has-arrow" href="/api/v1/user/all">
                                    <span class="educate-icon educate-home icon-wrap"></span>
                                    <span class="mini-click-non">Beneficiary</span>
                                 </a>
                             <ul class="submenu-angle" aria-expanded="true">
                                 <li><a href="/api/v1/user/all"><span class="mini-sub-pro">All users</span></a></li>
-                                <!-- <li><a href="/api/v1/user/add"><span class="mini-sub-pro">Add user</span></a></li> -->
+                                <li><a href="/api/v1/user/finGrantee"><span class="mini-sub-pro">Grants</span></a></li>
                                 <li><a href="/api/v1/user/edit"><span class="mini-sub-pro">Edit user</span></a></li>
                                 <li><a href="/api/v1/user/del"><span class="mini-sub-pro">delete user</span></a></li>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Cooperatives</span></a>
+                            <a class="has-arrow" href="All Cooperatives" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Cooperatives</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a href="/api/v1/coop/ops/fetch"><span class="mini-sub-pro">All Cooperatives</span></a></li>
                                 <li><a href="/api/v1/coop/ops/remove"><span class="mini-sub-pro">Delete Cooperative</span></a></li>
@@ -97,11 +97,11 @@
                         </li>
                         
                         <li>
-                            <a class="has-arrow" href="" aria-expanded="false"><span class="educate-icon educate-pages icon-wrap"></span></span> <span class="mini-click-non">Warehouse</span></a>
+                            <a class="has-arrow" href="/api/v1/store/all" aria-expanded="false"><span class="educate-icon educate-pages icon-wrap"></span></span> <span class="mini-click-non">Warehouse</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a  href="/api/v1/store/all"><span class="mini-sub-pro">All Stores</span></a></li>
                                 <li><a  href="/api/v1/store/add"><span class="mini-sub-pro">Add Store</span></a></li>
-                                <li><a href="/api/v1/store/modPage"><span class="mini-sub-pro">Edit Store</span></a></li>
+                                <li><a href="/api/v1/store/editPage"><span class="mini-sub-pro">Edit Store</span></a></li>
                                 <li><a href="/api/v1/store/del"><span class="mini-sub-pro">Delete Store</span></a></li>
                             </ul>
                         </li>
@@ -120,7 +120,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Update</span></a>
+                            <a class="has-arrow" href="/api/v1/store/upts/price" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Update</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a  href="/api/v1/store/upts/price"><span class="mini-sub-pro">prices</span></a></li>
                             </ul>
@@ -137,7 +137,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                        <a href="localhost:5000/"><font size="6"><b>EAX</b></font></a>
+                        <a href="/api/v1/index"><font size="6"><b>EAX</b></font></a>
                     </div>
                 </div>
             </div>
@@ -199,7 +199,7 @@
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
                                                         <li><a href="/api/v1/profile"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
                                                         </li>
-                                                        <li><a href="/api/v1/user/settings"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
+                                                        <li><a href="/api/v1/settings"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
                                                         </li>
                                                         <li><a href="/logout"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
                                                         </li>
@@ -223,7 +223,7 @@
                             <div class="mobile-menu">
                                 <nav id="dropdown">
                                     <ul class="mobile-menu-nav">
-                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">Beneficiary <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li><a data-toggle="collapse" data-target="#Charts" href="/api/v1/user/all">Beneficiary <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul class="collapse dropdown-header-top">
                                                 <li><a href="/api/v1/user/all"><span class="mini-sub-pro">All users</span></a></li>
                                                 <!-- <li><a href="add-professor.html"><span class="mini-sub-pro">Add user</span></a></li> -->
@@ -232,40 +232,40 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Cooperatives</span></a>
+                                            <a class="has-arrow" href="/api/v1/coop/ops/fetch" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Cooperatives</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a href="all-students.html"><span class="mini-sub-pro">All Cooperatives</span></a></li>
-                                                <li><a href="professor-profile.html"><span class="mini-sub-pro">Delete Cooperative</span></a></li>
+                                                <li><a href="/api/v1/coop/ops/fetch"><span class="mini-sub-pro">All Cooperatives</span></a></li>
+                                                <li><a href="/api/v1/coop/ops/remove"><span class="mini-sub-pro">Delete Cooperative</span></a></li>
+                                            </ul>
+                                        </li>
+                                        
+                                       <li>
+                                            <a class="has-arrow" href="/api/v1/store/all" aria-expanded="false"><span class="educate-icon educate-pages icon-wrap"></span></span> <span class="mini-click-non">Warehouse</span></a>
+                                            <ul class="submenu-angle" aria-expanded="false">
+                                                <li><a  href="/api/v1/store/all"><span class="mini-sub-pro">All Stores</span></a></li>
+                                                <li><a  href="/api/v1/store/add"><span class="mini-sub-pro">Add Store</span></a></li>
+                                                <li><a href="/api/v1/store/modPage"><span class="mini-sub-pro">Edit Store</span></a></li>
+                                                <li><a href="/api/v1/store/del"><span class="mini-sub-pro">Delete Store</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow" href="/api/v1/bidders/all" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span> <span class="mini-click-non">Companies</span></a>
+                                            <ul class="submenu-angle" aria-expanded="false">
+                                                <li><a href="/api/v1/bidders/all"><span class="mini-sub-pro">All Companies</span></a></li>
+                                                <li><a  href="/api/v1/bidders/Del"><span class="mini-sub-pro">Delete Company</span></a></li>
                                             </ul>
                                         </li>
                                         
                                         <li>
-                                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Warehouse</span></a>
+                                            <a class="has-arrow" href="/api/v1/auction/allCom" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Auction</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a href="all-courses.html"><span class="mini-sub-pro">All Stores</span></a></li>
-                                                <li><a href="add-course.html"><span class="mini-sub-pro">Add Store</span></a></li>
-                                                <li><a href="edit-course.html"><span class="mini-sub-pro">Edit Store</span></a></li>
-                                                <li><a href="course-info.html"><span class="mini-sub-pro">Delete Store</span></a></li>
+                                                <li><a href="/api/v1/auction/allCom"><span class="mini-sub-pro">Commodities List</span></a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="has-arrow" href="all-students.html" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span> <span class="mini-click-non">Companies</span></a>
+                                            <a class="has-arrow" href="/api/v1/store/upts/price" aria-expanded="false"><span class="educate-icon educate-library icon-wrap"></span> <span class="mini-click-non">Update</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a href=""><span class="mini-sub-pro">All Companies</span></a></li>
-                                                <li><a href="student-profile.html"><span class="mini-sub-pro">Delete Company</span></a></li>
-                                            </ul>
-                                        </li>
-                                        
-                                        <li>
-                                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Auction</span></a>
-                                            <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a href="departments.html"><span class="mini-sub-pro">Commodities List</span></a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-library icon-wrap"></span> <span class="mini-click-non">Update</span></a>
-                                            <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a  href="Update.html"><span class="mini-sub-pro">prices</span></a></li>
+                                                <li><a  href="/api/v1/store/upts/price"><span class="mini-sub-pro">prices</span></a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -276,12 +276,12 @@
                 </div>
             </div>
         {{else}}
-            {{#if isCoop}}
+            {{#if role.isCoop}}
             <!-- cooperative menu -->
             <div class="left-sidebar-pro">
                 <nav id="sidebar" class="">
                     <div class="sidebar-header">
-                        <a href="/api/v1/user/index"><font size="6"><b>EAX</b></font></a>
+                        <a href="/api/v1/index"><font size="6"><b>EAX</b></font></a>
                         <!-- <strong><a href="index.html"><font size="9"><b>E</b></font></a></strong> -->
                     </div>
                     <div class="left-custom-menu-adp-wrap comment-scrollbar">
@@ -293,7 +293,7 @@
                                            <span class="mini-click-non">Beneficiary</span>
                                         </a>
                                     <ul class="submenu-angle" aria-expanded="true">
-                                        <li><a href="#"><span class="mini-sub-pro">Add Cooperative</span></a></li>
+                                        <li><a href="/api/v1/coop/add"><span class="mini-sub-pro">Add Cooperative</span></a></li>
                                         <!-- <li><a href="/api/v1/user/add"><span class="mini-sub-pro">Add user</span></a></li> -->
                                         <li><a href="#"><span class="mini-sub-pro">Edit Cooperative</span></a></li>
                                         <li><a href="#"><span class="mini-sub-pro">Store</span></a></li>
@@ -418,7 +418,7 @@
                 <div class="left-sidebar-pro">
                 <nav id="sidebar" class="">
                     <div class="sidebar-header">
-                        <a href="/api/v1/user/index"><font size="6"><b>EAX</b></font></a>
+                        <a href="/api/v1/index"><font size="6"><b>EAX</b></font></a>
                         <!-- <strong><a href="index.html"><font size="9"><b>E</b></font></a></strong> -->
                     </div>
                     <div class="left-custom-menu-adp-wrap comment-scrollbar">
@@ -434,7 +434,7 @@
                                         <!-- <li><a href="/api/v1/user/add"><span class="mini-sub-pro">Add user</span></a></li> -->
                                         <li><a href="#"><span class="mini-sub-pro">Edit Information</span></a></li>
                                         <li><a href="#"><span class="mini-sub-pro">Auction</span></a></li>
-                                        <li><a href="#"><span class="mini-sub-pro">Bid</span></a></li>
+                                        <li><a href="/api/v1/bidders/bid"><span class="mini-sub-pro">Bid</span></a></li>
                                     </ul>
                                 </li>
                                 
@@ -450,7 +450,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="logo-pro">
-                                <a href="localhost:5000/"><font size="6"><b>EAX</b></font></a>
+                                <a href="/api/v1/index"><font size="6"><b>EAX</b></font></a>
                             </div>
                         </div>
                     </div>
@@ -542,7 +542,7 @@
                                                         <!-- <li><a href="add-professor.html"><span class="mini-sub-pro">Add user</span></a></li> -->
                                                         <li><a href="#"><span class="mini-sub-pro">Edit Information</span></a></li>
                                                         <li><a  href="#"><span class="mini-sub-pro">Auction</span></a></li>
-                                                        <li><a  href="#"><span class="mini-sub-pro">Bid</span></a></li>
+                                                        <li><a  href="/api/v1/bidders/bid"><span class="mini-sub-pro">Bid</span></a></li>
                                                     </ul>
                                                 </li> 
                                             </ul>

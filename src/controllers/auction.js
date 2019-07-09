@@ -46,7 +46,7 @@ class auction {
 				message:'something went wrong on server'
 			}))
 		}catch(err){
-			return es.render('auction',{
+			return res.render('auction',{
 				user:req.user.userFind,
 					role:{
 						isEax:req.user.role.isEax(req.user.userFind),

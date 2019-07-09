@@ -28,6 +28,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <span>{{message}}</span>
+                        <p></p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap drp-lst">
                             <h4>Company List</h4>
                             <div class="asset-inner">
@@ -51,11 +55,11 @@
                                         <td>{{tin}}</td>
                                         <td><a href="{{BankHis}}">Bank records</a></td>
                                         <td><a href="{{RBCertificate}}">RDB certificate</a></td>
-                                        <td><a href="{{RACertificate}}">RRA certificate</a></td>
+                                         <td><a href="{{RACertificate}}">RRA certificate</a></td>
                                         <td><a href="{{compAgrees}}">Agreement</a></td>
                                         <td><a href="{{LeaderSignL}}">Signed letter</a></td>
                                         <td><a href="{{compAuditR}}">Audit Report</a></td>
-                                        <form action="" method="">
+                                        <form action="/api/v1/user/verify/{{UserId}}/bidder" method="post">
                                         <td>
                                             <button data-toggle="tooltip" title="verify" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                         </td>

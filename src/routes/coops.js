@@ -40,6 +40,11 @@ router.post('/api/v1/coop/ops/info',Coop.getDelInfo);
 router.get('/api/v1/coop/add',(req,res)=>{
 	res.render('add-coop',{
 		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		},
 	});
 })
 

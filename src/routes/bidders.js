@@ -17,6 +17,11 @@ router.get('/api/v1/bidders/all',Bidder.getAll);
 router.get('/api/v1/bidders/Del',(req,res)=>{
 	res.render('del-company',{
 		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		},
 		
 	})
 })
@@ -27,6 +32,17 @@ router.post('/api/v1/bidders/infoDel',Bidder.getInfoDel);
 // route to get add company info page
 router.get('/api/v1/add',(req,res)=>{
 	res.render('add-comp',{
+		user:req.user.userFind,
+		role:{
+			isEax:req.user.role.isEax(req.user.userFind),
+			isCoop:req.user.role.isCoop(req.user.userFind),
+			isBidder:req.user.role.isBidder(req.user.userFind),
+		},
+	})
+})
+// route to get to bidding
+router.get('/api/v1/bidders/bid',(req,res)=>{
+	res.render('bid',{
 		user:req.user.userFind,
 		role:{
 			isEax:req.user.role.isEax(req.user.userFind),
