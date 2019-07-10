@@ -47,6 +47,6 @@ router.get('/api/v1/coop/add',(req,res)=>{
 		},
 	});
 })
-
+// route to get coop-store 
 	
 export default router;

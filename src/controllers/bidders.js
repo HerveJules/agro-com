@@ -74,7 +74,7 @@ class bidder{
 			const findAll = await Bidder.findAll({
 				attributes:['compName','compLocation',
 				'tin','BankHis','RBCertificate','RACertificate',
-				'compAgrees','LeaderSignL','compAuditR','bankSlip']
+				'compAgrees','LeaderSignL','compAuditR','bankSlip','UserId']
 			});
 			if (findAll) {
 				return res.render('all-companies',{
