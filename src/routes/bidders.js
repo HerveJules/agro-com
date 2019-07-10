@@ -41,7 +41,7 @@ router.get('/api/v1/add',(req,res)=>{
 	})
 })
 // route to get to bidding
-router.get('/api/v1/bidders/bid',(req,res)=>{
+router.get('/api/v1/bidder/bid',middlewares.isVerified,(req,res)=>{
 	res.render('bid',{
 		user:req.user.userFind,
 		role:{
