@@ -17,7 +17,7 @@
     "heroku-postbuild": "npm install"
   },
   "engines": {
-    "node": "10.16.0"
+    "node": "18.13.0"
   },
   "repository": {
     "type": "git",
@@ -30,40 +30,39 @@
     "url": "https://github.com/HerveJules/agro-com/issues"
   },
   "homepage": "https://github.com/HerveJules/agro-com#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.4.3",
-    "eslint-config-airbnb": "^17.1.0",
-    "nodemon": "^1.18.11"
-  },
   "dependencies": {
-    "babel-eslint": "^10.0.1",
-    "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
-    "cloudinary": "^1.14.0",
-    "cookie-parser": "^1.4.4",
-    "datauri": "^2.0.0",
-    "dotenv": "^7.0.0",
+    "babel-eslint": "^10.1.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "cloudinary": "^1.33.0",
+    "cookie-parser": "^1.4.6",
+    "datauri": "^4.1.0",
+    "dotenv": "^16.0.3",
     "email-validator": "^2.0.4",
-    "express": "^4.16.4",
-    "express-fileupload": "^1.1.4",
-    "express-handlebars": "^3.1.0",
-    "express-validator": "^5.3.1",
-    "fs": "0.0.1-security",
-    "jsonwebtoken": "^8.5.1",
-    "multer": "^1.4.1",
-    "multer-storage-cloudinary": "^2.2.1",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "password-validator": "^4.1.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "express-handlebars": "^6.0.6",
+    "express-validator": "^6.14.2",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "password-validator": "^5.3.0",
     "path": "^0.12.7",
-    "pg": "^7.9.0",
-    "sequelize": "^5.3.5",
-    "sequelize-cli": "^5.5.0",
-    "underscore": "^1.9.1",
-    "uuid": "^3.3.2"
+    "pg": "^8.8.0",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2",
+    "underscore": "^1.13.6",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/node": "^7.20.7",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.20.2",
+    "eslint-config-airbnb": "^19.0.4"
   }
 }
