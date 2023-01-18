@@ -7,7 +7,6 @@ on:
 
 
 jobs:
-  name: install npm depedencies 
   build:
     runs-on: ubuntu-latest
 
