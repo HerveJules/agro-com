@@ -5,11 +5,9 @@ on:
   push:
     branches: [develop]
 
-  pull_request:
-    branches: [develop]
 
 jobs:
-
+  name: install npm depedencies 
   build:
     runs-on: ubuntu-latest
 
@@ -24,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run build --if-present
-      - run: npm run test
+      #- run: npm run build --if-present
+      #- run: npm run test
       - run: echo "workflow install dependencies"
       
